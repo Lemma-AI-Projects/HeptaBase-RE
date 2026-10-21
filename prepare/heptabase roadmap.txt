@@ -1,0 +1,593 @@
+MCP: Download original PDFs, images, audio, videos, and attachments.	2026/10/16	v1.112.6
+Mobile App: Upgraded editor experience	2026/10/13	Mobile App v1.41.2
+Claude Plugin: Search, read, create, edit, and organize your knowledge in Claude	2026/10/09	Claude Plugin v0.1.1
+Mobile App: Ask AI about PDFs	2026/10/08	Mobile App v1.41.1
+Mobile App: Ask AI about audio and video cards	2026/10/08	Mobile App v1.41.1
+Heptabase CLI 0.7.0: Import local images and embed them in new or existing notes.	2026/10/07	v1.112.2
+Mobile App: Ask AI about note cards and whiteboards	2026/10/03	Mobile App v1.41.0
+Mobile App: Kanban & table views for tag databases.	2026/09/30	Mobile App v1.40.1
+Mobile App: Navigation visual upgrade	2026/09/28	Mobile App v1.40.1
+ChatGPT Plugin: Search, read, create, edit, and organize your knowledge in ChatGPT	2026/09/23	ChatGPT Plugin v0.1.0
+Whiteboard: Mini map	2026/09/23	v1.112.0
+Tag Database: Reorder options for select and multi-select properties	2026/09/23	v1.112.0
+Mobile App: Better whiteboard navigation with minimap	2026/09/23	Mobile App v1.40.0
+Mobile App: Find content within a whiteboard	2026/09/23	Mobile App v1.40.0
+Mobile App: New quick capture	2026/09/17	Mobile App v1.39.2
+Mobile App: Copy cards as Markdown	2026/09/17	Mobile App v1.39.2
+Mobile App: Create and link a card from selected text	2026/09/17	Mobile App v1.39.2
+Inbox: Improve triage experience	2026/09/16	v1.111.0
+Tag Database: Created / Updated time properties	2026/09/14	v1.110.0
+Tag Database: Filter by dates, whiteboards, tags, keywords, and more	2026/09/14	v1.110.0
+Card Library: Filter by properties, dates, and more.	2026/09/14	v1.110.0
+Mobile App: Backlinks preview mentions and jump to the block	2026/09/11	Mobile App v1.39.0
+Mobile App: Inbox	2026/09/11	Mobile App v1.39.0
+Editor: Allow both text color and background color	2026/09/11	v1.109.0
+Whiteboard: Batch & custom resize objects	2026/09/11	v1.109.0
+Mindmap: Turn into normal whiteboard objects with connections	2026/09/11	v1.109.0
+Mindmap: Delete node without delete branch	2026/09/11	v1.109.0
+Editor: Spell-check language & dictionary setting	2026/09/03	v1.108.1
+Whiteboard: Display connected objects in Focus mode	2026/09/03	v1.108.1
+Whiteboard: Add or turn selected objects into a whiteboard	2026/09/03	v1.108.1
+Search: Display location context	2026/09/03	v1.108.1
+AI Agent: Read block links and embed blocks	2026/09/03	v1.108.1
+Mobile App: Capture web page content with Share Sheet	2026/09/03	Mobile App v1.38.3
+Mobile App: Open Heptabase links directly in the app	2026/09/03	Mobile App v1.38.3
+Editor: Search inside code blocks & folded lists	2026/08/31	v1.107.0
+Editor: Create and link a card from selected text	2026/08/31	v1.107.0
+Tag Database: Bulk select, fill, clear, copy, and paste cell values with undo redo	2026/08/31	v1.107.0
+AI Agent: Read backlinks for cards, journals, and whiteboards	2026/08/31	v1.107.0
+Mobile App: Sync pinned tabs across devices	2026/08/28	Mobile App v1.38.2
+Mobile App: Copy code blocks	2026/08/28	Mobile App v1.38.2
+Mobile App: Restore cards and whiteboards from Trash	2026/08/28	Mobile App v1.38.2
+Mobile App: Share and save media cards and blocks	2026/08/28	Mobile App v1.38.2
+Editor: Backlink search, sort, collapse	2026/08/27	v1.106.0
+Editor: Backlinks from mindmap nodes & date properties	2026/08/27	v1.106.0
+Editor: Merge, split, and add color to selected table cells	2026/08/27	v1.106.0
+Editor: Use Tab, Shift + Tab, Esc to navigate table cells	2026/08/27	v1.106.0
+Editor: Move, delete, and insert multiple rows & columns	2026/08/27	v1.106.0
+Editor: Hover previews for card & block links	2026/08/27	v1.106.0
+Tag Database: Export CSV & Excel	2026/08/27	v1.106.0
+AI Agent: Support custom base URL endpoint	2026/08/27	v1.106.0
+Mindmap: Turn a branch into a card, copy branch content	2026/08/24	v1.105.0
+Editor: Mention & embed a block	2026/08/24	v1.105.0
+Editor: Better usability in creating embedded cards	2026/08/24	v1.105.0
+Editor: Support OS menu during right click	2026/08/24	v1.105.0
+Editor: Escape inline code through ArrowRight key	2026/08/24	v1.105.0
+Editor: Copy card as markdown	2026/08/24	v1.105.0
+Mobile App: Edit tag properties from a card	2026/08/24	Mobile App v1.38.1
+Heptabase CLI 0.6.0: Read, inspect, and modify whiteboards—including their hierarchy, layout, objects, sections, connections, and mind maps—and export whiteboard screenshots.	2026/08/24	v1.105.0
+MCP: Read and search cards, journals, images, PDF pages, whiteboards, mind maps, and tag databases.	2026/08/24	v1.105.0
+MCP: Create and edit notes and journals, edit card properties, and place existing objects on whiteboards.	2026/08/24	v1.105.0
+Editor: Find and replace text	2026/08/19	v1.104.0
+Editor: Full width mode	2026/08/19	v1.104.0
+Whiteboard: Back to content	2026/08/19	v1.104.0
+Whiteboard: Tidy up sections	2026/08/19	v1.104.0
+AI Agent: Add existing properties to a tag database	2026/08/19	v1.104.0
+Mobile App: AI Agent	2026/08/18	Mobile App v1.38.0
+Mobile App: AI Tutor	2026/08/18	Mobile App v1.38.0
+AI Agent: Upgrade How You Read with AI Skills	2026/8/14	v1.103.0
+AI Agent: Improved capability for editing the whiteboard layout	2026/8/14	v1.103.0
+AI Agent: Use ChatGPT Codex inside Heptabase	2026/7/27	v1.101.1
+AI Agent: Support OpenRouter and open source models	2026/7/24	v1.100.0
+AI Agent: Organize knowledge base	2026/7/23	v1.99.0
+AI Agent: Personalized Instruction	2026/7/23	v1.99.0
+AI Agent: Edit whiteboard content and layout	2026/7/23	v1.99.0
+AI Agent: Edit tags and properties	2026/6/2	v1.98.0
+Heptabase CLI 0.4.0: File, PDF & media transcript commands	2026/5/29	v1.97.0
+AI Agent: Edit journal cards	2026/5/23	v1.96.1
+AI Agent: Edit card content	2026/5/20	v1.96.0
+AI Agent: View mention links, sub-whiteboards, and more	2026/5/20	v1.96.0
+Heptabase CLI 0.3.0: Tag & Card properties commands	2026/5/13	v1.94.0
+Heptabase CLI 0.2.0: Whiteboard commands	2026/5/6	v1.93.0
+Mobile App: PDF highlight and annotation	2026/5/4	Mobile App v1.35.3
+App: Live public link for cards	2026/5/1	v1.92.1
+Heptabase CLI Skills	2026/4/29	v1.91.3
+App: Heptabase CLI	2026/4/22	v1.91.0
+Whiteboard: Export Whiteboard as Image	2026/4/2	v1.89.0
+App: AI Tutor	2026/3/31	v1.88.0
+Mobile App: Editor Template	2026/3/18	Mobile App v1.34.0.2
+Editor: Bookmark blocks	2026/3/18	v1.87.1
+Mindmap: Vertical Layout	2026/3/18	v1.87.0
+Mobile App: Home screen widget - Search, quick write, and voice note	2026/3/18	Mobile App v1.34.0
+App: Highlight and annotate text on Note cards	2026/3/13	v1.86.1
+App: Web card	2026/3/11	v1.85.1
+App: Zotero integration	2026/2/23	v1.84.0
+Chat: AI suggested questions for newly created chats	2026/1/22	v1.83.4
+Tag Database: Support search and card count	2026/1/20	v1.83.3
+Tag Database: Nested tags	2026/1/13	v1.83.0
+Tag Database: Redesign	2026/1/5	v1.82.6
+Whiteboard: AI action for cards	2025/12/26	v1.82.0
+Heptabase MCP	2025/12/11	v1.81.2
+App: Import .docx files as note cards	2025/12/10	v1.81.2
+App: Free AI usage for all users	2025/12/05	v1.81.0
+App: Create new research topic	2025/12/05	v1.81.0
+App: New onboarding tutorial	2025/12/05	v1.81.0
+App: Introduce the Premium plan	2025/12/05	v1.81.0
+Chat: Ask AI questions using the entire knowledge base as context	2025/11/24	v1.79.1
+Right Sidebar: Display all to-dos of the current whiteboard and card	2025/11/11	v1.78.4
+App: Web tab	2025/10/31	v1.78.0
+Right Sidebar: AI suggestions for related cards	2025/10/29	v1.77.0
+PDF: Click the outline button to copy or add a chapter as context	2025/10/25	v1.76.1
+App: Support can chat permission for public link	2025/10/09	v1.75.0
+PDF: Use "Shift + Click" or drag a box to select multiple parsed blocks	2025/10/04	v1.74.3
+PDF: Parsing content, images, equations, and tables with OCR	2025/09/25	v1.74.0
+App: Live public link	2025/09/08	v1.73.0
+Right Sidebar: New design	2025/09/05	v1.72.0
+Side Panel: New design	2025/09/05	v1.72.0
+App: Design system upgrade	2025/09/05	v1.72.0
+Mobile App: New sign-in UI	2025/09/01	Mobile App v1.30.0
+Chat: Ask AI questions using selected sections as context	2025/08/25	v1.71.0
+Whiteboard: Toolbar	2025/08/19	v1.70.0
+Chat: Ask AI questions using selected PDF cards as context	2025/08/12	v1.69.0
+Chat: Ask AI questions using selected texts as context	2025/08/04	v1.68.0
+Chat: Ask AI questions using selected images as context	2025/08/04	v1.68.0
+Chat: Ask AI questions using selected chats and messages as context	2025/07/29	v1.67.0
+Search: Advanced filter for global search	2025/07/22	v1.66.0
+Chat: Add emoji reactions to messages	2025/07/21	v1.65.0
+Chat: Ask AI questions using selected whiteboards as context	2025/07/11	v1.63.0
+Chat: Get reference links from the AI response	2025/07/11	v1.63.0
+Chat: Ask AI questions using selected non-PDF cards as context	2025/06/25	v1.59.0
+Chat: Chat with collaborators and extract messages on a whiteboard	2025/06/25	v1.59.0
+Inbox: Receive notifications from messages that mention or reply to you	2025/06/25	v1.59.0
+Inbox: Unify quick capture, reminders, and to-dos	2025/06/06	v1.58.0
+Collaboration: Support sharing a single card with all types of permissions	2025/06/06	v1.58.0
+Collaboration: Support Can View and Can Edit permissions for whiteboards	2025/05/16	v1.57.0
+App: Deep Link	2025/05/05	v1.56.0
+Web app: On-demand load to improve performance	2025/04/08	v1.55.0
+Mobile App: Voice Note Quick Capture	2025/04/02	Mobile App v1.27.0.2
+Whiteboard: Create a calendar for journal reviews	2025/03/28	v1.54.0
+Web Clipper: Better image capture, capture youtube videos	2025/03/04	v1.4.0
+Journal: Display due tasks	2025/02/14	v1.53.0
+Collaboration: Invite free users to edit a whiteboard	2025/02/07	v1.52.0
+PDF: Support Google Scholar Preview on citations	2025/02/07	v1.52.0
+Mobile App: Task app	2025/01/23	Mobile App v1.26.0
+Media Card: YouTube Transcript	2024/12/23	v1.49.0
+Media Card: Import Podcast Episode	2024/12/09	v1.48.0
+Media Card: Transcript and Insight	2024/12/09	v1.48.0
+Right Sidebar: Use Whiteboard	2024/12/03	v1.47.0
+Mindmap: Multi-select nodes	2024/11/20	v1.46.0
+Right sidebar: Whiteboard Location Panel	2024/11/19	v1.45.0
+Whiteboard: Support Text Element in Mindmap	2024/11/11	v1.44.0
+Whiteboard: Support Highlight Card in Mindmap	2024/10/18	v1.43.0
+Mobile App: Share Sheet for Android	2024/10/18	Mobile App v1.22.0
+Mobile App: Share Sheet for iOS	2024/10/04	Mobile App v1.21.1
+App: Better Search Results for Quick Find	2024/10/02	v1.41.0
+Whiteboard: Drag and drop AI Insights	2024/09/25	v1.40.0
+App: Referral Reward	2024/09/18	v1.39.0
+Whiteboard: Full Title For Folded Cards	2024/09/11	v1.38.0
+App: Open Multiple Heptabase Windows	2024/09/05	v1.37.0
+App: Insight Generator	2024/09/04	v1.36.0
+Mobile App: Split Panel on iPad	2024/08/14	Mobile App v1.17.3
+Whiteboard: Large text at small zoom	2024/07/25	v1.35.0
+Mobile App: Drag and drop blocks in the editor	2024/07/24	Mobile App v1.17.2
+Whiteboard: Import backlinks for selected cards	2024/07/19	v1.34.1
+Mobile App: Import Cards on iPad & Tablet	2024/07/15	Mobile App v1.17.2
+Whiteboard: Reset objects to default Size	2024/07/11	v1.34.0
+Mobile App: Create, Edit, and Connect Everything on Whiteboard	2024/06/27	Mobile App v1.17.1
+Mobile App: Performance Optimization for Whiteboards with Media Files	2024/06/24	Mobile App v1.17.1
+Mobile App: Create and Edit Card and Text on Whiteboard	2024/05/30	Mobile App v1.17.0
+Web Clipper	2024/05/27	v1.1.0
+Editor: Export to PDF	2024/04/27	v1.32.0
+App: Better Sync Performance & Conflict Resolution	2024/04/05	v1.31.9
+Editor: Backlinks from Text Properties / Elements / Nodes / Arrows / Sections	2024/03/20	v1.31.0
+Tag: Relation Property	2024/03/10	v1.30.0
+Whiteboard: Improve scroll and zoom performance	2024/02/22	v1.28.0
+Mindmap: Change color and fold node	2024/02/15	v1.26.0
+Card Library: Sort	2024/02/06	v1.25.0
+Tag: Sort	2024/02/06	v1.25.0
+App: Image Card Filter and Action	2024/02/01	v1.24.0
+App: Audio Card Filter and Action	2024/01/26	v1.23.1
+Editor: Template	2024/01/26	v1.23.1
+App: Whiteboard history	2024/01/18	v1.22.0
+Right sidebar: Journal task panel, whiteboard backlinks	2024/01/18	v1.22.0
+Right Sidebar: Card word counts, whiteboard table of content, PDF highlights	2024/01/16	v1.21.0
+Whiteboard: Quick Access	2024/01/11	v1.20.0
+Right Sidebar: Card Table of Content	2024/01/11	v1.20.0
+App: Video Card Filter and Action	2024/01/08	v1.19.0
+App: Whiteboard Trash Can	2024/01/08	v1.19.0
+Right Sidebar: Search and add cards and web elements from the search bar	2023/12/24	v1.18.0
+Whiteboard: Upgrade the right sidebar to support the display and operation of multiple items	2023/12/24	v1.18.0
+App: Highlight Card Filter and Action	2023/12/24	v1.18.0
+Journal: Allow users to move tasks to another date when rescheduling them in the Journal	2023/11/27	v1.17.0
+Task App: Todo grouping, assign due dates	2023/11/20	v1.16.0
+App: Journal Card Filter and Action	2023/11/20	v1.16.0
+Task App: Display all to-dos across Heptabase	2023/11/7	v1.15.0
+Whiteboard: Paste content as text elements	2023/11/7	v1.15.0
+Left Sidebar: Pin tabs, tab group, tab folder, clear tabs, etc.	2023/10/29	v1.13.0
+Whiteboard: Audio & Video Elements	2023/10/17	v1.12.0
+Whiteboard: Focus Mode	2023/10/17	v1.12.0
+Mobile App: Card Info, Backlinks, Properties	2023/10/5	Mobile App v1.6.0
+Whiteboard: Image Elements	2023/10/2	v1.11.0
+App: Better Export for tags, properties, and mindmaps	2023/10/02	v1.11.0
+Mobile App: New Home	2023/9/29	Mobile App v1.4.0
+Highlight: Sort and Color	2023/9/26	v1.10.0
+App: Built-in Customer Support	2023/9/19	v1.8.0
+Mobile App: Block Search	2023/9/18	Mobile App v1.2.4
+Mobile App: Version History	2023/9/14	Mobile App v1.2.3
+Editor: Version History	2023/9/13	v1.5.0
+Whiteboard: Quick look a whiteboard object by pressing space key	2023/9/10	v1.4.0
+Mobile App: Performance Optimization	2023/9/6	Mobile App v1.2
+App: Free Trial and New Pricing	2023/8/31	v1.0.0
+PDF Reader Upgrade	2023/8/31	v1.0.0
+Mobile App v2 (Full Access)	2023/8/29	Mobile App v1.1
+Whiteboard: Keyboard Navigation	2023/8/28	v0.371.0
+Whiteboard: Section Auto-grow & Card Space-out	2023/8/24	v0.369.1
+App: New Tutorial and Slides	2023/8/19	v0.367.1
+Whiteboard: Connect mindmap node to anything	2023/8/8	v0.358.0
+App: Design System Upgrade - Command Palette	2023/7/26	v0.350.2
+App: Design System Upgrade - Menus	2023/7/20	v0.349.1
+Whiteboard: Arrow Elbow Curve	2023/7/17	v0.346.0
+App: Search Engine Upgrade for Card Library / Highlight	2023/7/16	v0.344.0
+App: Search Engine Upgrade for Mention Menu / Split Panel	2023/7/11	v0.342.0
+Whiteboard: Expanded card in mindmap	2023/7/8	v0.338.0
+Whiteboard: Arrow Line Style, Head Style, Color	2023/7/7	v0.336.0
+App: Search Engine Upgrade for Cmd + O / Cmd + P	2023/7/5	v0.333.1
+Whiteboard: Custom Arrow Control Point	2023/7/1	v0.330.2
+App: Better Drag & Drop for working tab	2023/6/22	v0.327.0
+Tag: Drag & Drop for rearranging views	2023/6/22	v0.327.0
+Editor: Media Block Improvement	2023/6/9	v0.322.1
+Whiteboard: Adjust highlight element height	2023/6/6	v0.321.2
+Editor: Card Info redesign	2023/6/6	v0.321.2
+Tag: Date, Phone, Email Property	2023/6/6	v0.321.2
+Editor: List Upgrade	2023/6/4	v0.319.0
+App: PDF & Highlight Improvement	2023/6/4	v0.319.0
+Whiteboard: Mindmap Improvements Part 2	2023/6/4	v0.319.0
+Editor: Drag and Drop Upgrade	2023/6/4	v0.319.0
+Whiteboard: Mindmap Improvements Part 1	2023/5/28	v0.315.2
+Whiteboard: General improvements	2023/5/28	v0.315.2
+App: Change Billing Interval	2023/5/28	v0.315.2
+App: Database migration	2023/5/25	v0.312.0
+Whiteboard: Mindmap	2023/5/22	v0.310.2
+Tag: Text Property Improvement	2023/5/21	v0.309.0
+App: Markdown Export Improvement	2023/5/18	v0.306.0
+Editor: Table Colors and Headers	2023/5/15	v0.304.0
+Tag: Grouping & Entry Page Redesign	2023/5/15	v0.304.0
+Editor: Table Improvement	2023/5/8	v0.303.1
+Editor: Selection Improvement	2023/4/24	v0.299.0
+App: Change database	2023/4/18	v0.296.0
+Tag: Kanban View	2023/4/18	v0.296.0
+Editor: Mermaid diagram in code blocks	2023/4/13	v0.292.0
+Editor: Language search in code blocks	2023/4/13	v0.292.0
+Editor: Drag Handle Improvement	2023/4/13	v0.292.0
+Editor: Embed Highlight	2023/4/8	v0.291.2
+Whiteboard: Improve Image Loading Performance	2023/3/30	v0.289.0
+Editor: Edit Properties	2023/3/25	v0.286.0
+Whiteboard: Zoom to fit selection	2023/3/23	v0.284.0
+Editor: Mention Section	2023/3/23	v0.284.0
+Whiteboard: Copy links to all	2023/3/18	v0.280.0
+Editor: Embed Card	2023/3/18	v0.280.0
+Tag: Multiple View	2023/3/18	v0.280.0
+Editor: File, Audio, Video, Image Upload + Local Storage	2023/3/10	v0.276.0
+Tag: Table View Cell & Row Interaction	2023/3/8	v0.274.1
+App: Mobile App v1	2023/3/1	
+Editor: New Color	2023/2/27	v0.272.0
+App: Assistant	2023/2/24	v0.271.0
+App: Highlight Search	2023/2/16	v0.268.0
+Editor: Toggle Headings	2023/2/16	v0.268.0
+App: Highlight App	2023/2/13	v0.265.1
+Tag: Table View Filter	2023/2/8	v0.263.0
+App: Readwise Integration v2	2023/2/3	v0.260.0
+App: Change Email Address	2023/2/3	v0.260.0
+Tag: Table View Row & Column Drag & Drop	2023/1/27	v0.258.0
+Whiteboard: Rich-text support for text elements	2023/1/27	v0.258.0
+Whiteboard: Split Panel Upgrade	2023/1/18	v0.256.0
+Tag: Add text, number, checkbox properties	2023/1/16	v0.254.1
+App: PDF Area Highlight and Annotation	2023/1/16	v0.254.1
+App: Journal Tab, Popup, etc	2023/1/10	v0.253.0
+Whiteboard: Create section for selected objects	2023/1/8	v0.251.0
+Tag: Database Table View v1	2023/1/8	v0.251.0
+Whiteboard: Highlight & Annotation Objects	2023/1/4	v0.248.0
+App: Web App v1	2023/1/2	v0.247.0
+Editor: Backlinks for blocks and annotations	2022/12/27	v0.244.1
+App: PDF Text Highlight & Annotation	2022/12/24	v0.242.0
+Editor: Multi-blocks in Table Cell	2022/12/22	v0.240.2
+Editor: Change Table Width	2022/12/22	v0.240.2
+Editor: Text Color & Text Background Color	2022/12/22	v0.240.2
+Editor: Upgrade Performance	2022/12/22	v0.240.2
+Editor: Link to block	2022/12/22	v0.240.2
+App: Prev/Next for whiteboard cards & popup windows	2022/12/15	v0.237.0
+App: PDF Cards v2	2022/12/8	v0.235.0
+App: PDF Cards v1	2022/12/4	v0.233.0
+Whiteboard: Journal Objects	2022/11/20	v0.225.0
+Whiteboard: Connection arrows for card mention links	2022/11/5	v0.220.0
+Editor: Image Download	2022/11/2	v0.219.1
+Whiteboard: No-directional & Bi-directional connections	2022/11/2	v0.219.1
+Editor: Link performance & navigation optimization	2022/11/1	v0.218.2
+Whiteboard: Mouse Mode & Trackpad Mode	2022/11/1	v0.218.2
+App: Readwise Integration v1	2022/10/28	v0.216.0
+Whiteboard: Connection to everything (card, whiteboard, text, section)	2022/10/27	v0.214.0
+App: Real-time sync	2022/10/23	v0.211.0
+Whiteboard: Text Blocks	2022/9/25	v0.199.0
+Editor: Show Created & Laste Edited Time	2022/9/20	v0.198.0
+Whiteboard: Section	2022/9/14	v0.196.0
+Whiteboard: Journal Link Reference v1	2022/8/10	v0.184.1
+Whiteboard: Breadcrumb	2022/8/1	v0.182.1
+Search: Multi-tag & whiteboard filter	2022/7/29	v0.181.0
+Editor: Better Block Design	2022/7/23	v0.179.0
+Editor: Copy Link	2022/7/20	v0.176.0
+Whiteboard: Card Link Reference	2022/7/20	v0.176.0
+Editor: Table	2022/7/18	v0.174.0
+App: Prev/Next	2022/7/16	v0.172.1
+Editor: Toggle List	2022/7/13	v0.170.0
+Editor: Drag & Drop improvement	2022/7/9	v0.169.0
+Editor: Mention a whiteboard	2022/7/8	v0.168.0
+Editor: Mention a date	2022/7/5	v0.166.1
+App: Remember App State & Windows Size	2022/7/3	v0.165.0
+Editor: Block menu	2022/6/29	v0.163.1
+Editor: Turn blocks into a card	2022/6/29	v0.163.1
+Card Library: Timeline Mode	2022/6/24	v0.161.0
+App: Tag Redesign	2022/6/24	v0.161.0
+App: Journal	2022/6/24	v0.161.0
+Editor: Show full linked reference	2022/6/19	v0.158.0
+Editor: Create or mention a card from existing text	2022/6/19	v0.158.0
+App: Tutorial v6	2022/6/18	v0.157.0
+Whiteboard: Change the viewport edge with the selection box	2022/6/12	v0.154.0
+App: Keyboard Shortcuts + Tooltips	2022/6/12	v0.154.0
+Editor: Better Math Editing Experience in Latex	2022/6/12	v0.154.0
+Editor: Mention menu preview and better ]] behavior	2022/6/7	v0.151.0
+Whiteboard: Prev navigation	2022/5/29	v0.146.0
+App: Universal Search with Cmd+O	2022/5/27	v0.144.0
+Whiteboard: Nesting	2022/5/26	v0.143.0
+Editor: Video embed	2022/5/23	v0.141.0
+Map: Change Whiteboard Color	2022/5/17	v0.140.0
+App: Import Markdown Vault	2022/5/14	v0.139.0
+Editor: Link reference & Info	2022/5/7	v0.138.1
+Editor: Update card link with card’s title (like Notion, Roam, etc)	2022/5/4	v0.136.0
+Editor: Change block format	2022/5/1	v0.135.0
+Editor: List usability improvement	2022/4/25	v0.131.0
+Command Palette: Global Full-text Search	2022/4/25	v0.131.0
+App: Cmd/Ctrl + N to create a new card	2022/4/23	v0.130.0
+Whiteboard: Full text search for cards	2022/4/23	v0.130.0
+Command Palette: Redesign UI	2022/4/23	v0.130.0
+App: Dark theme for Windows	2022/4/12	v0.125.0
+Whiteboard: Customized arrow direction	2022/4/10	v0.123.0
+Editor: Full text search for the content	2022/4/6	v0.122.0
+Editor: Image Resize & Align	2022/4/4	v0.121.0
+Editor: Move block with keyboard	2022/4/3	v0.120.0
+Whiteboard: Bulk fold cards	2022/4/2	v0.119.0
+Whiteboard: Drag blocks across cards	2022/4/1	v0.118.0
+Whiteboard: Drag blocks to create a card	2022/3/31	v0.117.0
+Whiteboard: Tidy up	2022/3/30	v0.116.0
+Whiteboard: Undo/Redo creating cards & connections	2022/3/28	v0.115.0
+App: Empty Trash	2022/3/28	v0.115.0
+Editor: Multi-select blocks	2022/3/27	v0.114.1
+App: Manually check for updates	2022/3/26	v0.113.0
+App: Ctrl/Cmd + S to sync	2022/3/26	v0.113.0
+Whiteboard: Auto-content fit	2022/3/24	v0.112.0
+Editor: Toggle spell check	2022/3/22	v0.111.0
+Editor: Markdown export	2022/3/22	v0.111.0
+Whiteboard: Direct edit cards during split mode	2022/3/21	v0.110.0
+App: Let China’s user login without VPN	2022/3/19	v0.109.0
+Whiteboard: Performance Optimization (resize, move)	2022/3/17	v0.108.0
+Editor: Enable spell check	2022/3/15	v0.107.0
+Whiteboard: Performance Optimization (zoom, scroll)	2022/3/15	v0.107.0
+App: Let China’s user sync without VPN	2022/3/14	v0.106.0
+App: Let China’s user upload image without VPN	2022/3/14	v0.106.0
+Whiteboard: Undo/Redo card resizing, fold state, colors	2022/3/11	v0.105.0
+Whiteboard: Undo/Redo card movement	2022/3/10	v0.104.0
+Whiteboard: Alt drag to duplicate cards	2022/3/10	v0.103.0
+Whiteboard: Fit to content	2022/3/10	v0.103.0
+Editor: Paste text as markdown	2022/3/9	v0.102.0
+Editor: Paste url on text to create hyperlink	2022/3/8	v0.101.0
+Editor: Cmd+K to add link on text	2022/3/8	v0.101.0
+Whiteboard: Show menu for multi-cards action without right-click	2022/3/7	v0.100.0
+Tutorial: Allow users to skip steps	2022/3/7	v0.100.0
+Whiteboard: Redesign right click context menu	2022/3/7	v0.99.0
+Editor: Foldable bullet list	2022/3/5	v0.98.0
+Editor: Auto-add hyperlink on pasting urls	2022/3/4	v0.97.0
+Editor: Create cards on a card tab	2022/3/4	v0.97.0
+Editor: Drag & drop a block	2022/3/1	v0.95.0
+Whiteboard: Open multiple cards into a multi-pane tab	2022/2/28	v0.94.0
+Whiteboard: Drag & drop tabs	2022/2/28	v0.94.0
+Tab: Swap cards in multi-panel	2022/2/27	v0.93.0
+Whiteboard: Better drag event detection for mouse	2022/2/27	v0.93.0
+Hot key to create a card	2022/2/27	v0.93.0
+Command Palette - Navigation	2022/2/27	v0.93.0
+Map: Improve Performance	2022/2/26	v0.93.0
+Tab: Multi-pane	2022/2/26	v0.93.0
+Editor: Backspace remove heading	2022/2/26	v0.92.0
+Card Library: Bulk actions on cards	2022/2/22	v0.87.0
+Editor: Better markdown mode	2022/2/21	v0.86.0
+Editor: Better Code Blocks (syntax highlight, tab, etc)	2022/2/20	v0.85.0
+Card Library: Context menu	2022/2/20	v0.85.0
+Editor: Manage tags	2022/2/20	v0.85.0
+Editor: Slash menu to add & mention card	2022/2/19	v0.84.0
+Editor: More button	2022/2/18	v0.83.0
+Editor: Image Popup	2022/2/17	v0.82.0
+Info Window: Redesign v3	2022/2/17	v0.82.0
+Editor: Divider	2022/2/16	v0.81.0
+Whiteboard: Draw arrow from cards	2022/2/15	v0.80.0
+App: Google Auth	2022/2/15	v0.80.0
+App: http://Customer.io integration	2022/2/15	v0.80.0
+Editor: Todo List	2022/2/14	v0.78.0
+Whiteboard: Space bar & middle wheel to grab move	2022/2/11	v0.75.0
+Sidebar: Card tabs	2022/2/10	v0.74.0
+Whiteboard: Filter cards in the import bar	2022/2/10	v0.74.0
+Tag App: Import cards with tag into a whiteboard	2022/2/9	v0.72.0
+Whiteboard: Tool mode redesign	2022/2/7	v0.71.0
+Whiteboard: Share & Publish	2022/2/1	v0.67.1
+Command Palette: Scroll options with keyboards	2022/1/31	v0.66.0
+Sidebar: Whiteboard tabs	2022/1/29	v0.65.0
+Card Library: Filter with tags & whiteboards	2022/1/26	v0.62.0
+Editor: Image block placeholder	2022/1/23	v0.60.0
+Timeline: Display & go to a whiteboard	2022/1/22	v0.59.0
+Tag App: Edit, merge, delete tags	2022/1/21	v0.58.1
+Editor: Paste local images	2022/1/20	v0.57.0
+Tag App: List view	2022/1/19	v0.56.0
+Command Palette: Whiteboard search with Cmd+P	2022/1/17	v0.55.0
+Command Palette: App navigation with Cmd+K	2022/1/17	v0.55.0
+Timeline: Add tags to a card	2022/1/16	v0.54.0
+Shortcut: Hide sidebar	2022/1/13	v0.52.1
+App: Cloud backup	2022/1/9	v0.50.0
+App: Stripe Integration	2022/1/9	v0.50.0
+App: Cross-device syncing	2022/1/9	v0.50.0
+Editor: New slash menu design	2021/12/14	v0.45.0
+Sidebar: Settings	2021/12/13	v0.44.0
+App: New color system	2021/12/10	v0.40.0
+Whiteboard: Avoid creating card when dbclick enter the whiteboard from map	2021/12/8	v0.39.2
+Whiteboard: Arrow key to navigate offset	2021/12/5	v0.39.0
+App: Rebrand from Meta → Hepta	2021/11/20	v0.29.0
+App: Value discovery slide	2021/11/15	v0.25.1
+Whiteboard: Scroll performance optimization	2021/11/13	v0.24.1
+Card Library: Better drag event detection for mouse	2021/11/12	v0.24.0
+Map: Better drag event detection for mouse	2021/11/12	v0.24.0
+App: In-app notification on updates	2021/11/6	v0.18.0
+App: Remember preference	2021/11/6	v0.18.0
+App: Open link in default app & browser	2021/11/4	v0.16.0
+Editor: Auto place cursor when adding link	2021/11/2	v0.12.1
+App: Auto-backup All-Data.json into a local folder	2021/11/1	v0.12.1
+App: Tutorial v5	2021/10/27	v0.10.0
+Card Library: clear all empty cards	2021/10/27	v0.10.0
+App: Compact UI design	2021/10/25	v0.9.0
+Whiteboard: Performance optimization	2021/10/25	v0.9.0
+Timeline	2021/10/25	v0.9.0
+App: Electron App (Linux)	2021/10/21	v0.7.2
+Whiteboard: Click to zoom in a card	2021/10/20	v0.6.1
+Sidebar: Zoom out a whiteboard	2021/10/20	v0.6.1
+App: Electron App (Win32)	2021/10/19	v0.4.2
+App: All-Data file check	2021/10/12	v0.1.0
+App: Sign out	2021/10/12	v0.1.0
+App: Multi accounts in one device	2021/10/12	v0.1.0
+App: Electron App (Mac and Windows)	2021/10/12	v0.1.0
+App: Firebase accounts	2021/10/12	v0.1.0
+App: Email sign in redirect	2021/10/12	v0.1.0
+Whiteboard: Copy and paste in split mode	2021/10/11	
+Whiteboard: Keyboard shortcut in split mode	2021/10/11	
+App: New description page	2021/9/28	
+Home: Hide cards on the whiteboards	2021/9/27	
+Card Library: Orphan Cards	2021/9/26	
+Card Library: Toggle on/off tag	2021/9/26	
+Editor: Better floating menu	2021/9/24	
+Editor: Cmd/Ctrl + click a mention link to open a new card on the whiteboard	2021/9/23	
+WhiteBoard: Put arrows and cards on the same layers	2021/9/23	
+WhiteBoard: Undo / redo for removing cards from a whiteboard	2021/9/20	
+App: Tutorial v4	2021/9/20	
+App: Tutorial v3	2021/9/18	
+App: Better exported structure	2021/9/17	
+App: Refactor the whiteboard codebase	2021/9/16	
+Whiteboard: Link-clicking navigation	2021/9/14	
+Editor: Hyperlink	2021/9/13	
+Whiteboard: Double click a card to enter full screen mode from split mode	2021/9/12	
+Editor: Navigate whiteboard through card-to-card link	2021/9/12	
+Editor: Resize image syntax	2021/9/8	
+Editor: Backlinks	2021/9/7	
+Editor: Mention to create a new card	2021/9/4	
+Editor: Mention a existing card	2021/9/4	
+Trash: Deleted cards	2021/9/2	
+Sidebar: Redesign	2021/8/30	
+Whiteboard: Right click menu for connections	2021/8/29	
+Whiteboard: Bulk add colors to cards	2021/8/28	
+Whiteboard: Right-click menu for single card	2021/8/27	
+Whiteboard: Bulk delete cards	2021/8/27	
+Whiteboard: Bulk add tags to cards	2021/8/27	
+Editor: Slash command	2021/8/26	
+App: Import text & markdown files into card library	2021/8/24	
+Whiteboard: Snap to middle	2021/8/24	
+Editor: Highlight	2021/8/23	
+Editor: Floating menu	2021/8/23	
+App: Backup whiteboards into markdown files	2021/8/22	
+Whiteboard: Double click folded card to open split mode	2021/8/22	
+Whiteboard: Color a folded card	2021/8/22	
+Card Library: Drag cards from card library into a new / existing whiteboard	2021/8/21	
+Editor: Underline	2021/8/20	
+Whiteboard: Inspect connections	2021/8/20	
+Editor: LaTeX	2021/8/19	
+Editor: Strike through	2021/8/19	
+Editor: Arrow shortcut	2021/8/19	
+Redesign folder structure of All-Data.zip	2021/8/17	
+Show synced card in the same whiteboard	2021/8/17	
+Whiteboard: Add card library button on the import panel	2021/8/17	
+Editor: Tab, shift-tab	2021/8/17	
+Whiteboard: Paste & sync cards across whiteboards	2021/8/16	
+Card Library: Markdown preview	2021/8/16	
+Whiteboard: go to card library through clicking tag	2021/8/16	
+Whiteboard: Paste & sync cards in a whiteboard	2021/8/16	
+Whiteboard: Duplicate cards across whiteboards	2021/8/16	
+Whiteboard: Duplicate cards in the same whiteboard	2021/8/16	
+Editor: Markdown shortcut	2021/8/15	
+Editor: Responsive image	2021/8/15	
+App: Refactor entire codebase with custom hooks	2021/8/14	
+Home: Dropdown menu for enter/delete a whiteboard	2021/8/4	
+App: Restyle dark mode color	2021/8/2	
+Info Window: Redesign v2	2021/8/1	
+Whiteboard: Zoom +/-	2021/7/28	
+Whiteboard: Cubic Bezier connection curve	2021/7/26	
+Whiteboard: Show sync info on top of a card	2021/7/25	
+Whiteboard: Add instruction on split mode	2021/7/24	
+Whiteboard: Add tags to a card	2021/7/23	
+App: Instruction in uploading data	2021/7/22	
+App: Put a date on the backup zip file	2021/7/22	
+Home: Map View	2021/7/20	
+App: Add a card which shows markdown syntax examples	2021/7/20	
+Whiteboard: Hot keys to change tools	2021/7/18	
+Whiteboard: Grab & connect tools	2021/7/17	
+Card Library: Grab move in mapView	2021/7/16	
+Whiteboard: Split mode	2021/7/15	
+Whiteboard: Move and resize the card editor window	2021/7/14	
+Whiteboard: Open card editor window	2021/7/14	
+Whiteboard: Alt + click a card to open a card window	2021/7/14	
+All Cards: Add tooltip for buttons	2021/7/13	
+Tags: Add Instruction for creating nested tags	2021/7/13	
+Whiteboard: Tutorial	2021/7/13	
+All Whiteboards: Add magnify icon	2021/7/12	
+Whiteboard: Shift multi select cards	2021/7/12	
+App: Unified button paddings	2021/7/11	
+All Cards: Tag map view	2021/7/10	
+Whiteboard: Shift horizontal scroll	2021/7/10	
+All Cards: Bulk add tag to cards	2021/7/9	
+Whiteboard: Expand a folded card	2021/7/9	
+All Cards: Multi select cards with [hold shift]+Click individual cards	2021/7/8	
+All Cards: Bulk delete	2021/7/7	
+Whiteboard: Draw connection arrow from/to folded cards	2021/7/7	
+All Cards: Bulk select	2021/7/7	
+Sidebar: Toggle nested tags to filter cards	2021/7/5	
+All Cards: Edit selected card in card graph	2021/7/2	
+All Cards: Filter card graph with tag & search	2021/7/2	
+All Cards: List view	2021/7/2	
+All Cards: Open card editor as a Window	2021/7/1	
+All Cards: Show untagged cards	2021/6/30	
+App: Better download icon	2021/6/29	
+Whiteboard: Fold a card	2021/6/28	
+Whiteboard: Hover buttons and show tooltip	2021/6/27	
+Whiteboard: Continuously drag cards into a Whiteboard from the import panel	2021/6/26	
+Whiteboard: Resize a card from all directions	2021/6/24	
+Whiteboard: Drag a card when editing	2021/6/24	
+Whiteboard: Selection box	2021/6/24	
+Whiteboard: Arrow key & Shift + arrow Key to move selected card	2021/6/23	
+App: Dark mode	2021/6/22	
+Whiteboard: Snapping and auto alignment of cards	2021/6/20	
+Whiteboard: Click to edit a card & drag a card while editing	2021/6/20	
+App: Offline support with Progressive Web App (PWA)	2021/6/19	
+Whiteboard: Import a card from the sidebar	2021/6/18	
+All Cards: Graph View	2021/6/15	
+Tags: Add a tag to a card & filter cards with tags	2021/6/15	
+Whiteboard: Color a card	2021/6/11	
+All Cards: Grid view	2021/6/9	
+Whiteboard: Fuzzy search all cards + Increase performance	2021/6/7	
+Whiteboard: Auto-focus the last edited card when entering a whiteboard	2021/6/7	
+App: Retrieve backup data from AllData.json	2021/6/6	
+App: Export all data into markdown files	2021/6/6	
+Editor: Clickable hyperlink	2021/6/5	
+Editor: Headings, Bold, Italic, Code, Hyperlink, Bullet list, Numbered List	2021/6/4	
+App: Resize and toggle sidebar	2021/6/3	
+Info Window: Find forward and backward connections of a card	2021/6/1	
+Cards Graph: Basic	2021/5/31	
+Editor: MarkDown preview	2021/5/29	
+Whiteboard: Navigate cards from the sidebar	2021/5/26	
+Whiteboard: Delete a connection arrow	2021/5/25	
+Whiteboard: Add a description to a connection arrow	2021/5/25	
+Whiteboard: Draw connection arrows between cards	2021/5/24	
+Whiteboard: Direct select & drag a card	2021/5/22	
+Whiteboard: Grab move	2021/5/22	
+App: Delete cards and whiteBoards	2021/5/21	
+Whiteboard: Functional icons on a card	2021/5/20	
+Whiteboard: Zoom	2021/5/19	
+Whiteboard: Find all parent whiteboards of a Card	2021/5/19	
+Whiteboard: Scroll infinity canvas	2021/5/18	
+Sidebar: Basic Navigation	2021/5/17	
+Whiteboard: Remove a card	2021/5/17	
+All Cards	2021/5/17	
+Whiteboard: Import a card from search window	2021/5/16	
+All Whiteboards	2021/5/16	
+Whiteboard: Expand a card into focus view	2021/5/15	
+Whiteboard: Create, drag & drop a card

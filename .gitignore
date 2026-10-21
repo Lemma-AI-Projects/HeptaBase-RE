@@ -1,0 +1,9 @@
+# Local working artifacts (browser capture receipts, scratch state)
+.tabbit-logs/
+state/
+
+# OS / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
