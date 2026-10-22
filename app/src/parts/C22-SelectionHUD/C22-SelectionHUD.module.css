@@ -65,3 +65,14 @@
   background: var(--c-sunken);
   color: var(--c-text);
 }
+
+.alignGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+}
+
+.alignGrid .icon {
+  width: 22px;
+  height: 20px;
+}

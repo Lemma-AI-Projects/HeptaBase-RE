@@ -295,12 +295,12 @@ export const SECTIONS: SectionData[] = [
 ]
 
 export const EDGES: EdgeData[] = [
-  { id: 'E1', from: 'A1', to: 'B1', shape: 'curve', direction: 'one', fromSide: 'r', toSide: 'l', label: '所以分散' },
-  { id: 'E2', from: 'A3', to: 'B7', shape: 'curve', direction: 'one', fromSide: 'r', toSide: 'l' },
-  { id: 'E3', from: 'B2', to: 'C6', shape: 'curve', direction: 'one', fromSide: 'r', toSide: 'l', label: '成本旋钮' },
-  { id: 'E4', from: 'B4', to: 'C1', shape: 'curve', direction: 'one', fromSide: 'r', toSide: 'l' },
-  { id: 'E5', from: 'C3', to: 'D2', shape: 'curve', direction: 'one', fromSide: 'r', toSide: 'l' },
-  { id: 'E6', from: 'C5', to: 'D4', shape: 'ortho', direction: 'one', fromSide: 'r', toSide: 'l' },
+  { id: 'E1', from: 'A1', to: 'B1', shape: 'curve', direction: 'none', fromSide: 'r', toSide: 'l', label: '所以分散' },
+  { id: 'E2', from: 'A3', to: 'B7', shape: 'curve', direction: 'none', fromSide: 'r', toSide: 'l' },
+  { id: 'E3', from: 'B2', to: 'C6', shape: 'curve', direction: 'none', fromSide: 'r', toSide: 'l', label: '成本旋钮' },
+  { id: 'E4', from: 'B4', to: 'C1', shape: 'curve', direction: 'none', fromSide: 'r', toSide: 'l' },
+  { id: 'E5', from: 'C3', to: 'D2', shape: 'curve', direction: 'none', fromSide: 'r', toSide: 'l' },
+  { id: 'E6', from: 'C5', to: 'D4', shape: 'ortho', direction: 'none', fromSide: 'r', toSide: 'l' },
 ]
 
 export type MediaItem = {

@@ -28,10 +28,12 @@ export type EdgeData = {
   from: string
   to: string
   shape: 'curve' | 'ortho'
-  direction: 'one' | 'both'
+  direction: 'one' | 'both' | 'none'
   fromSide: Side
   toSide: Side
   label?: string
+  /** 相对默认中点的偏移，拖弯折时写入 */
+  bend?: { x: number; y: number }
 }
 
 export type LaidCard = { data: CardData; rect: Rect; sectionId: string }
@@ -139,8 +141,11 @@ export function edgePath(
   to: { x: number; y: number },
   fromSide: Side,
   toSide: Side,
-  shape: 'curve' | 'ortho'
+  shape: 'curve' | 'ortho',
+  bend?: { x: number; y: number }
 ): string {
+  const bx = bend?.x ?? 0
+  const by = bend?.y ?? 0
   if (shape === 'ortho') {
     const mid = fromSide === 'l' || fromSide === 'r' ? (from.x + to.x) / 2 : (from.y + to.y) / 2
     const a = fromSide === 'l' || fromSide === 'r' ? `L ${mid} ${from.y}` : `L ${from.x} ${mid}`
@@ -153,28 +158,32 @@ export function edgePath(
   const n2 = normal(toSide)
   const c1 = { x: from.x + n1.x * k, y: from.y + n1.y * k }
   const c2 = { x: to.x + n2.x * k, y: to.y + n2.y * k }
-  return `M ${from.x} ${from.y} C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${to.x} ${to.y}`
+  return `M ${from.x} ${from.y} C ${c1.x + bx} ${c1.y + by} ${c2.x + bx} ${c2.y + by} ${to.x} ${to.y}`
 }
 
 export function bezierMid(
   from: { x: number; y: number },
   to: { x: number; y: number },
   fromSide: Side,
-  toSide: Side
+  toSide: Side,
+  bend?: { x: number; y: number }
 ): { x: number; y: number; angle: number } {
+  const bx = bend?.x ?? 0
+  const by = bend?.y ?? 0
   const dist = Math.hypot(to.x - from.x, to.y - from.y)
   const k = Math.max(40, dist * 0.4)
   const n1 = normal(fromSide)
   const n2 = normal(toSide)
   const c1 = { x: from.x + n1.x * k, y: from.y + n1.y * k }
-  const c2 = { x: to.x + n2.x * k, y: to.y + n2.y * k }
+  const c2 = { x: to.x + n2.x * k + bx, y: to.y + n2.y * k + by }
+  const c1b = { x: c1.x + bx, y: c1.y + by }
   // t = 0.5 处的点与切线
   const p = {
-    x: (from.x + 3 * c1.x + 3 * c2.x + to.x) / 8,
-    y: (from.y + 3 * c1.y + 3 * c2.y + to.y) / 8,
+    x: (from.x + 3 * c1b.x + 3 * c2.x + to.x) / 8,
+    y: (from.y + 3 * c1b.y + 3 * c2.y + to.y) / 8,
   }
-  const dx = 3 * (c2.x - c1.x) + 3 * (to.x - from.x)
-  const dy = 3 * (c2.y - c1.y) + 3 * (to.y - from.y)
+  const dx = 3 * (c2.x - c1b.x) + 3 * (to.x - from.x)
+  const dy = 3 * (c2.y - c1b.y) + 3 * (to.y - from.y)
   const angle = (Math.atan2(dy, dx) * 180) / Math.PI
   return { ...p, angle }
 }

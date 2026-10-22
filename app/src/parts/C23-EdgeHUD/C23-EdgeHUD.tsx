@@ -16,10 +16,10 @@ export function EdgeHUD({
   x: number
   y: number
   shape: 'curve' | 'ortho'
-  direction: 'one' | 'both'
+  direction: 'one' | 'both' | 'none'
   label?: string
   onShape: (v: 'curve' | 'ortho') => void
-  onDirection: (v: 'one' | 'both') => void
+  onDirection: (v: 'one' | 'both' | 'none') => void
   onLabel: (v: string) => void
   onDelete: () => void
 }): JSX.Element {

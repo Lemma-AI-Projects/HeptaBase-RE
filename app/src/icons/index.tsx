@@ -37,6 +37,14 @@ export type IconName =
   | 'divider'
   | 'book'
   | 'pdf'
+  | 'alignLeft'
+  | 'alignCenterH'
+  | 'alignRight'
+  | 'alignTop'
+  | 'alignCenterV'
+  | 'alignBottom'
+  | 'distributeH'
+  | 'distributeV'
 
 const PATHS: Record<IconName, JSX.Element> = {
   inbox: (
@@ -175,6 +183,26 @@ const PATHS: Record<IconName, JSX.Element> = {
     <>
       <path d="M4 5.5c2-1 4-1 6 0v10c-2-1-4-1-6 0z" />
       <path d="M16 5.5c-2-1-4-1-6 0v10c2-1 4-1 6 0z" />
+    </>
+  ),
+  alignLeft: <path d="M4 5h10M4 10h6M4 15h9" />,
+  alignCenterH: <path d="M6 5h8M4.5 10h11M6.5 15h7" />,
+  alignRight: <path d="M6 5h10M10 10h6M7 15h9" />,
+  alignTop: <path d="M5 4v11M10 4v6M15 4v8" />,
+  alignCenterV: <path d="M5 6v8M10 4.5v11M15 6.5v7" />,
+  alignBottom: <path d="M5 5v11M10 9v7M15 7v9" />,
+  distributeH: (
+    <>
+      <rect x="3.5" y="7" width="3" height="6" rx="0.8" />
+      <rect x="13.5" y="7" width="3" height="6" rx="0.8" />
+      <path d="M7.5 10h5M6.6 9.2 7.5 10l-.9.8M13.4 9.2l.9.8.9-.8" />
+    </>
+  ),
+  distributeV: (
+    <>
+      <rect x="7" y="3.5" width="6" height="3" rx="0.8" />
+      <rect x="7" y="13.5" width="6" height="3" rx="0.8" />
+      <path d="M10 7.5v5M9.2 6.6l.8.9.8-.9M9.2 13.4l.8-.9.8.9" />
     </>
   ),
   pdf: (

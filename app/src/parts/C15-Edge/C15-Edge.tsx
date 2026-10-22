@@ -8,10 +8,17 @@ export type EdgeProps = {
   fromSide: Side
   toSide: Side
   shape?: 'curve' | 'ortho'
-  direction?: 'one' | 'both'
+  direction?: 'one' | 'both' | 'none'
   label?: string
   selected?: boolean
   disabled?: boolean
+  /** 当前缩放，用来把命中区换算成屏幕上恒定的宽度 */
+  zoom?: number
+  /** 标签由上层单独渲染时，这里不画 */
+  hideLabel?: boolean
+  bend?: { x: number; y: number }
+  onBendDown?: (e: ReactPointerEvent) => void
+  onBendReset?: () => void
   onSelect?: () => void
   onHandleDown?: (which: 'from' | 'to', e: ReactPointerEvent) => void
 }
@@ -29,14 +36,21 @@ export function Edge({
   label,
   selected = false,
   disabled = false,
+  zoom = 1,
+  hideLabel = false,
+  bend,
+  onBendDown,
+  onBendReset,
   onSelect,
   onHandleDown,
 }: EdgeProps): JSX.Element {
-  const d = edgePath(from, to, fromSide, toSide, shape)
+  const d = edgePath(from, to, fromSide, toSide, shape, bend)
   const { c1, c2 } = curveControls(from, to, fromSide, toSide)
-  const endAngle = deg(c2, to)
-  const startAngle = deg(c1, from)
-  const mid = bezierMid(from, to, fromSide, toSide)
+  const bx = bend?.x ?? 0
+  const by = bend?.y ?? 0
+  const endAngle = deg({ x: c2.x + bx, y: c2.y + by }, to)
+  const startAngle = deg({ x: c1.x + bx, y: c1.y + by }, from)
+  const mid = bezierMid(from, to, fromSide, toSide, bend)
   const color = selected ? 'var(--c-accent)' : 'var(--c-line-strong)'
 
   return (
@@ -52,7 +66,7 @@ export function Edge({
           <path d="M0 0 L7 3.2 L0 6.4 Z" />
         </g>
       ) : null}
-      {label ? (
+      {label && !hideLabel ? (
         <g transform={`translate(${mid.x} ${mid.y})`}>
           <rect x={-(label.length * 6 + 8)} y={-9} width={label.length * 12 + 16} height={18} rx={8} fill="var(--c-canvas)" />
           <text x={0} y={0} textAnchor="middle" dominantBaseline="central" fontSize={12} fill="var(--c-text-2)">
@@ -66,13 +80,31 @@ export function Edge({
         d={d}
         fill="none"
         stroke="transparent"
-        strokeWidth={14}
+        strokeWidth={16 / Math.max(0.05, zoom)}
         style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
         onPointerDown={(e) => {
           e.stopPropagation()
           onSelect?.()
         }}
       />
+
+      {selected && onBendDown ? (
+        <circle
+          data-edge-bend="1"
+          cx={mid.x}
+          cy={mid.y}
+          r={5}
+          fill="var(--c-panel)"
+          stroke="var(--c-accent)"
+          strokeWidth={1.5}
+          style={{ cursor: 'move', pointerEvents: 'auto' }}
+          onPointerDown={onBendDown}
+          onDoubleClick={(e) => {
+            e.stopPropagation()
+            onBendReset?.()
+          }}
+        />
+      ) : null}
 
       {selected ? (
         <>
