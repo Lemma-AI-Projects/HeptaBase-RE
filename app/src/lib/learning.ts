@@ -87,10 +87,53 @@ export const AI_SCRIPT = [
 
 /* ---------------- store ---------------- */
 
+const KEY = 'ls-review-v1'
+type Saved = { queue: string[]; ratings: Record<string, Mastery>; extra: Question[] }
+
 let queue: string[] = QUESTIONS.map((q) => q.id)
 let ratings: Record<string, Mastery> = {}
 const listeners = new Set<() => void>()
 const emit = () => listeners.forEach((l) => l())
+
+const save = () => {
+  try {
+    const ids = new Set(QUESTIONS.map((q) => q.id))
+    localStorage.setItem(
+      KEY,
+      JSON.stringify({
+        queue: queue.filter((id) => ids.has(id)),
+        ratings,
+        extra: QUESTIONS.filter((q) => q.id.startsWith('ai-')),
+      })
+    )
+  } catch {
+    /* 隐私模式写不进去，忽略 */
+  }
+}
+
+;(function restore() {
+  try {
+    if (location.hash.includes('review=fresh')) {
+      localStorage.removeItem(KEY)
+      return
+    }
+    const raw = localStorage.getItem(KEY)
+    if (!raw) return
+    const s = JSON.parse(raw) as Saved
+    if (Array.isArray(s.extra)) {
+      for (const q of s.extra) if (!QUESTIONS.some((x) => x.id === q.id)) QUESTIONS.push(q)
+    }
+    const known = new Set(QUESTIONS.map((q) => q.id))
+    if (Array.isArray(s.queue)) {
+      const kept = s.queue.filter((id) => known.has(id))
+      const missing = QUESTIONS.map((q) => q.id).filter((id) => !kept.includes(id))
+      queue = [...kept, ...missing]
+    }
+    if (s.ratings && typeof s.ratings === 'object') ratings = s.ratings
+  } catch {
+    /* 坏数据当没存过 */
+  }
+})()
 
 export const subscribeReview = (fn: () => void) => {
   listeners.add(fn)
@@ -102,18 +145,21 @@ export const getRatings = () => ratings
 export function rateQuestion(id: string, result: 'solid' | 'fuzzy') {
   ratings = { ...ratings, [id]: result }
   queue = result === 'solid' ? queue.filter((x) => x !== id) : [...queue.filter((x) => x !== id), id]
+  save()
   emit()
 }
 
 export function resetReview() {
   queue = QUESTIONS.map((q) => q.id)
   ratings = {}
+  save()
   emit()
 }
 
 export function addQuestion(q: Question) {
   QUESTIONS.push(q)
   queue = [...queue, q.id]
+  save()
   emit()
 }
 
