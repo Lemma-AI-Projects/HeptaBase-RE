@@ -1,0 +1,136 @@
+/* ===========================================================
+   tokens.css · 唯一数值来源
+   对应 Plan/Stage2/01-设计基准.md。改这里必须同步 src/tokens/index.ts
+   =========================================================== */
+
+:root {
+  /* 颜色 · 亮色 */
+  --c-canvas: #f7f7f4;
+  --c-surface: #fbfbf9;
+  --c-panel: #ffffff;
+  --c-sunken: #f2f2ee;
+  --c-line: #e7e6e0;
+  --c-line-strong: #d8d7d0;
+  --c-text: #1f1e1b;
+  --c-text-2: #6a6862;
+  --c-text-3: #9c9a92;
+  --c-accent: #3b82f6;
+  --c-accent-weak: #edf3fe;
+  --c-accent-line: #bbd4fb;
+  --c-danger: #dc2626;
+  --c-ok: #16a34a;
+  --c-highlight: #f5e6a8;
+
+  /* 7 色卡板 */
+  --c-green-fill: #e9f0e4;
+  --c-green-solid: #6f9a6a;
+  --c-blue-fill: #e4edf6;
+  --c-blue-solid: #5c86b8;
+  --c-orange-fill: #f8ecdf;
+  --c-orange-solid: #c08a5a;
+  --c-purple-fill: #efe9f4;
+  --c-purple-solid: #8b7ba8;
+  --c-red-fill: #f7e5e2;
+  --c-red-solid: #c07066;
+  --c-yellow-fill: #f8f1d8;
+  --c-yellow-solid: #c0a04a;
+  --c-gray-fill: #f0f0eb;
+  --c-gray-solid: #8c8b85;
+
+  /* 字号 6 级 */
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-18: 18px;
+  --fs-24: 24px;
+  --lh-11: 1.4;
+  --lh-12: 1.5;
+  --lh-13: 1.6;
+  --lh-14: 1.6;
+  --lh-18: 1.4;
+  --lh-24: 1.3;
+
+  /* 间距 6 档 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+
+  /* 布局常量 */
+  --rail-w: 240px;
+  --panel-w: 360px;
+  --strip-h: 40px;
+  --toolbar-w: 48px;
+  --dock-inset: 16px;
+
+  /* 圆角 3 档 */
+  --r-1: 8px;
+  --r-2: 10px;
+  --r-full: 999px;
+
+  /* 阴影 3 档 */
+  --sh-1: 0 1px 2px rgba(24, 23, 19, 0.05);
+  --sh-2: 0 4px 10px rgba(24, 23, 19, 0.07);
+  --sh-3: 0 12px 28px rgba(24, 23, 19, 0.1);
+
+  /* 动效 */
+  --dur-1: 120ms;
+  --dur-2: 160ms;
+  --dur-3: 200ms;
+  --ease-out: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
+
+  /* 分区底色混合比例（暗色要压暗，卡片才浮得起来） */
+  --sec-blend: 68%;
+
+  /* 画布 */
+  --zoom: 1;
+  --hair: clamp(0.5px, calc(1px / var(--zoom)), 2px);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --c-canvas: #171715;
+  --c-surface: #1d1d1a;
+  --c-panel: #232320;
+  --c-sunken: #141412;
+  --c-line: #33332d;
+  --c-line-strong: #45443c;
+  --c-text: #ebe9e3;
+  --c-text-2: #a6a39a;
+  --c-text-3: #75736b;
+  --c-accent: #6ba1f7;
+  --c-accent-weak: #1b293d;
+  --c-accent-line: #2f4a72;
+  --c-danger: #f0776a;
+  --c-ok: #4cb782;
+  --c-highlight: #4a3d14;
+
+  --c-green-fill: #2a3527;
+  --c-green-solid: #6f9a6a;
+  --c-blue-fill: #242f3b;
+  --c-blue-solid: #5c86b8;
+  --c-orange-fill: #382c21;
+  --c-orange-solid: #c08a5a;
+  --c-purple-fill: #2e2939;
+  --c-purple-solid: #8b7ba8;
+  --c-red-fill: #382624;
+  --c-red-solid: #c07066;
+  --c-yellow-fill: #35301f;
+  --c-yellow-solid: #c0a04a;
+  --c-gray-fill: #2b2b27;
+  --c-gray-solid: #8c8b85;
+
+  --sec-blend: 56%;
+
+  --sh-1: none;
+  --sh-2: none;
+  --sh-3: none;
+
+  color-scheme: dark;
+}
