@@ -1,0 +1,69 @@
+.box {
+  position: absolute;
+  border-radius: var(--r-1);
+  background: color-mix(in oklab, var(--sec-fill) var(--sec-blend), var(--c-canvas));
+  transition: height var(--dur-2) var(--ease-inout),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.selected,
+.force_selected {
+  box-shadow: inset 0 0 0 1.5px var(--c-accent);
+}
+
+.force_disabled {
+  opacity: 0.4;
+}
+
+.capsule {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  max-width: 100%;
+  padding: 0 10px;
+  border-radius: var(--r-full);
+  background: var(--sec-solid);
+  color: #fff;
+  font-size: var(--fs-12);
+  line-height: 1.4;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.24);
+  font-size: var(--fs-11);
+  font-variant-numeric: tabular-nums;
+}
+
+.collapsed {
+  overflow: hidden;
+}
+
+.collapsedHint {
+  position: absolute;
+  left: var(--sp-2);
+  bottom: var(--sp-2);
+  font-size: var(--fs-11);
+  color: var(--c-text-2);
+}
+
+.force_hover {
+  background: color-mix(in oklab, var(--sec-fill) 84%, var(--c-canvas));
+}

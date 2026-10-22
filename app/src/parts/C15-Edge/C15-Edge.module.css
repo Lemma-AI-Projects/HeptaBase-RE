@@ -1,0 +1,7 @@
+.edge {
+  pointer-events: none;
+}
+
+.edge path {
+  transition: stroke var(--dur-1) var(--ease-out);
+}

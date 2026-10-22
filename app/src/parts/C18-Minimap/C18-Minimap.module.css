@@ -1,0 +1,19 @@
+.wrap {
+  position: absolute;
+  left: var(--dock-inset);
+  bottom: var(--dock-inset);
+  z-index: 20;
+  width: 160px;
+  height: 110px;
+  padding: 0;
+  border-radius: var(--r-1);
+  background: color-mix(in oklab, var(--c-panel) 86%, transparent);
+  box-shadow: inset 0 0 0 1px var(--c-line), var(--sh-1);
+  backdrop-filter: blur(6px);
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.wrap svg {
+  display: block;
+}

@@ -1,0 +1,42 @@
+.strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--strip-h);
+  padding: 0 var(--sp-2);
+  flex: none;
+  background: var(--c-surface);
+  box-shadow: inset 0 -0.5px 0 var(--c-line);
+  gap: var(--sp-2);
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-2);
+  color: var(--c-text-3);
+  font-size: var(--fs-14);
+}
+
+.add:hover {
+  background: var(--c-sunken);
+  color: var(--c-text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex: none;
+}

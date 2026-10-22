@@ -1,0 +1,15 @@
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.line {
+  stroke: var(--c-accent);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.9;
+}

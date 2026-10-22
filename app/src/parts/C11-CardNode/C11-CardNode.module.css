@@ -1,0 +1,146 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sp-2) var(--sp-3) var(--sp-3);
+  background: var(--c-panel);
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 0 var(--hair) var(--c-line), var(--sh-1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out), opacity var(--dur-1) var(--ease-out);
+  text-align: left;
+}
+
+/* 卡片色只出现在 4px 卡头细条 */
+.colorBar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--card-color);
+}
+
+.tinted {
+  padding-top: 10px;
+  background: var(--card-color);
+}
+
+.title {
+  font-size: var(--fs-14);
+  line-height: var(--lh-14);
+  font-weight: 500;
+  color: var(--c-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-size: var(--fs-13);
+  line-height: var(--lh-13);
+  color: var(--c-text);
+}
+
+.lines li {
+  padding-left: 0;
+}
+
+.lines li.isBullet {
+  padding-left: var(--sp-3);
+  position: relative;
+}
+
+.lines li.isBullet::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 8.5px;
+  width: 3px;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: var(--c-text-3);
+}
+
+.lines mark {
+  background: var(--c-highlight);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+.hovered,
+.force_hover {
+  box-shadow: inset 0 0 0 var(--hair) var(--c-line-strong), var(--sh-2);
+}
+
+.selected,
+.force_selected {
+  box-shadow: inset 0 0 0 1.5px var(--c-accent), var(--sh-2);
+}
+
+.force_disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.folded {
+  gap: 0;
+  justify-content: center;
+}
+
+.folded .title {
+  -webkit-line-clamp: 1;
+  padding-right: var(--sp-4);
+}
+
+.foldMark {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(
+    135deg,
+    transparent 0 50%,
+    var(--c-line-strong) 50% 100%
+  );
+  border-bottom-right-radius: var(--r-1);
+}
+
+.mastery {
+  position: absolute;
+  right: var(--sp-2);
+  bottom: var(--sp-2);
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+}
+
+.fuzzy {
+  background: var(--c-yellow-solid);
+}
+
+.solid {
+  background: var(--c-ok);
+}
+
+.grid {
+  box-shadow: inset 0 0 0 var(--hair) var(--c-line), var(--sh-1);
+}
+
+.review {
+  width: 100%;
+}

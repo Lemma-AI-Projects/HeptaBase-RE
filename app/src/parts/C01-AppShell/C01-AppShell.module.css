@@ -1,0 +1,36 @@
+.shell {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: var(--c-canvas);
+}
+
+.left {
+  flex: none;
+  overflow: hidden;
+  background: var(--c-surface);
+  box-shadow: inset -0.5px 0 0 var(--c-line);
+  transition: width var(--dur-2) var(--ease-inout);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.right {
+  flex: none;
+  overflow: hidden;
+  background: var(--c-surface);
+  box-shadow: inset 0.5px 0 0 var(--c-line);
+  transition: width var(--dur-2) var(--ease-inout);
+}
+
+.rightInner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
