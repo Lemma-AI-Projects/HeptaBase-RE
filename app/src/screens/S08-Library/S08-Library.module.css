@@ -1,0 +1,117 @@
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--sp-4) var(--sp-4) 96px;
+  background: var(--c-canvas);
+}
+
+.inner {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.views {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--r-2);
+  background: var(--c-sunken);
+}
+
+.viewOn,
+.viewOff {
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: var(--fs-11);
+}
+
+.viewOn {
+  background: var(--c-panel);
+  color: var(--c-text);
+  box-shadow: var(--sh-1);
+}
+
+.viewOff {
+  color: var(--c-text-2);
+}
+
+.batchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-2);
+  background: var(--c-accent-weak);
+}
+
+.batchCount {
+  font-size: var(--fs-12);
+  color: var(--c-accent);
+  margin-right: auto;
+}
+
+.clearSel {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-4) 0;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 76px;
+  transform: translateX(-50%);
+  z-index: 80;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-full);
+  background: var(--c-text);
+  color: var(--c-panel);
+  font-size: var(--fs-12);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panelHead {
+  padding: var(--sp-3);
+  font-size: var(--fs-13);
+  font-weight: 500;
+}
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-12);
+  color: var(--c-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  margin: 0;
+  font-size: var(--fs-11);
+  line-height: 1.7;
+  color: var(--c-text-3);
+}
