@@ -1,0 +1,52 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.tip {
+  position: absolute;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--r-2);
+  background: var(--c-text);
+  color: var(--c-panel);
+  font-size: var(--fs-11);
+  line-height: var(--lh-11);
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--sh-2);
+  animation: fade var(--dur-1) var(--ease-out);
+}
+
+.top {
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom {
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.kbd {
+  font-size: var(--fs-11);
+  opacity: 0.6;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}

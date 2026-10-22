@@ -1,0 +1,48 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+}
+
+.input {
+  height: 32px;
+  width: 100%;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-2);
+  border: 1px solid var(--c-line-strong);
+  background: var(--c-panel);
+  font-size: var(--fs-13);
+  transition: border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.input::placeholder {
+  color: var(--c-text-3);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-weak);
+}
+
+.error {
+  border-color: var(--c-danger);
+}
+
+.msg {
+  font-size: var(--fs-11);
+  color: var(--c-danger);
+}
+
+.input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--c-sunken);
+}
+
+.input[data-force='focus'] {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-weak);
+}

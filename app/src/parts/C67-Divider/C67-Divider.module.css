@@ -1,0 +1,19 @@
+.line {
+  background: var(--c-line);
+  flex: none;
+}
+
+.horizontal {
+  height: 0.5px;
+  width: 100%;
+}
+
+.vertical {
+  width: 0.5px;
+  height: 100%;
+}
+
+.inset {
+  margin-left: var(--sp-3);
+  margin-right: var(--sp-3);
+}
