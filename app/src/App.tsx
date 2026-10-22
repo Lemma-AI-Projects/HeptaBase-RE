@@ -45,6 +45,13 @@ export function App(): JSX.Element {
     localStorage.setItem('ls-theme', theme)
   }, [theme])
 
+  const qs = route.query.toString()
+
+  useEffect(() => {
+    if (route.query.get('demo') === 'search') setSearchOpen(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qs])
+
   useEffect(() => {
     if (route.query.get('seed') !== '1') return
     if (getCards().length > 0) return

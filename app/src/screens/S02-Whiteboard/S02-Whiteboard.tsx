@@ -268,6 +268,27 @@ export function S02Whiteboard({
       ])
       return
     }
+    if (demo === 'newcard') {
+      const id = `N${Date.now()}`
+      const cx = (-viewport.x + stageSize().w / 2) / viewport.zoom
+      const cy = (-viewport.y + stageSize().h / 2) / viewport.zoom
+      run((b) => {
+        b.objs.push({
+          id,
+          kind: 'card',
+          x: Math.round(cx - 120),
+          y: Math.round(cy - 66),
+          w: 240,
+          h: 132,
+          color: 'yellow',
+          title: '新卡片',
+          lines: ['双击开始写'],
+        })
+        return b
+      })
+      setSelected([id])
+      return
+    }
     if (demo === 'edge') {
       setSelected(['E1'])
       return
@@ -568,7 +589,7 @@ export function S02Whiteboard({
     <AppShell
       rightOpen={rightOpen}
       left={
-        <AppRail apps={APPS} activeId="board" tags={TAGS} onAppSelected={() => undefined} />
+        <AppRail apps={APPS} activeId="board" tags={TAGS} />
       }
       main={
         <>
