@@ -81,7 +81,7 @@
 .zoomer {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .zoomer button {
@@ -92,7 +92,9 @@
   height: 22px;
   padding: 0 4px;
   border-radius: 5px;
-  font-size: var(--fs-12);
+  font-size: var(--fs-13);
+  font-weight: 500;
+  line-height: 1;
   color: var(--c-text-2);
   font-variant-numeric: tabular-nums;
 }

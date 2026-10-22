@@ -45,7 +45,7 @@ export function AppRail({
     rest
       .filter((t) => !t.folder)
       .reduce<Record<string, TagItem[]>>((acc, t) => {
-        const k = t.group ?? '标签'
+        const k = t.group ?? '我的标签'
         acc[k] = acc[k] ?? []
         acc[k].push(t)
         return acc
