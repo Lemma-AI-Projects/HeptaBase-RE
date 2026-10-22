@@ -76,4 +76,5 @@
 | Stage 2 | ✅ 完成（T2 待真人测） | [Stage2/04-验收记录.md](Stage2/04-验收记录.md)：12 ✅ + 1 ⚠️ |
 | Stage 3 | ✅ 三屏与摘录闭环 | [Stage3/README.md](Stage3/README.md) §7 |
 | Stage 4 | 🟡 主体可交互 | [Stage4/README.md](Stage4/README.md)：11/13 项 |
-| Stage 5–7 | ⏳ 未开始 | 见 [04-阶段任务与验收.md](04-阶段任务与验收.md) |
+| Stage 5 | 🟡 主体已可用 | [Stage5/README.md](Stage5/README.md)：8/10 项，每周回顾与增一减一未做 |
+| Stage 6–7 | ⏳ 未开始 | 见 [04-阶段任务与验收.md](04-阶段任务与验收.md) |
