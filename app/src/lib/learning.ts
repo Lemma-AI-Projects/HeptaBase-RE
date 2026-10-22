@@ -114,7 +114,12 @@ const save = () => {
 ;(function restore() {
   try {
     if (location.hash.includes('review=fresh')) {
+      // 一次性重置：清完把参数从地址里摘掉，刷新时不再清
       localStorage.removeItem(KEY)
+      const cleanHash = location.hash
+        .replace(/([?&])review=fresh\b&?/, '$1')
+        .replace(/[?&]$/, '')
+      history.replaceState(null, '', cleanHash)
       return
     }
     const raw = localStorage.getItem(KEY)
@@ -124,12 +129,16 @@ const save = () => {
       for (const q of s.extra) if (!QUESTIONS.some((x) => x.id === q.id)) QUESTIONS.push(q)
     }
     const known = new Set(QUESTIONS.map((q) => q.id))
+    const savedRatings = s.ratings && typeof s.ratings === 'object' ? s.ratings : {}
     if (Array.isArray(s.queue)) {
       const kept = s.queue.filter((id) => known.has(id))
-      const missing = QUESTIONS.map((q) => q.id).filter((id) => !kept.includes(id))
+      // 只把「全新的题」补进队列；已答过但不在队列里的（答对移除的）不能回来
+      const missing = QUESTIONS.map((q) => q.id).filter(
+        (id) => !kept.includes(id) && !(id in savedRatings)
+      )
       queue = [...kept, ...missing]
     }
-    if (s.ratings && typeof s.ratings === 'object') ratings = s.ratings
+    ratings = savedRatings
   } catch {
     /* 坏数据当没存过 */
   }
