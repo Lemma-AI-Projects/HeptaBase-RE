@@ -1,4 +1,4 @@
-import type { JSX } from 'react'
+import { useState, type JSX } from 'react'
 import { Icon, type IconName } from '@/icons'
 import { Divider } from '../C67-Divider/C67-Divider'
 import s from './C02-AppRail.module.css'
@@ -11,10 +11,21 @@ export type AppItem = {
   count?: number
 }
 
+export type TagItem = {
+  name: string
+  count?: number
+  /** 置顶：永远排在最上，最多 3 个 */
+  pinned?: boolean
+  /** 分组名；不填归入「标签」 */
+  group?: string
+  /** 文件夹名；有值时这个标签收在文件夹里 */
+  folder?: string
+}
+
 export type AppRailProps = {
   apps: AppItem[]
   activeId?: string
-  tags?: string[]
+  tags?: TagItem[]
   onAppSelected?: (id: string) => void
   onNewTopicClicked?: () => void
 }
@@ -26,6 +37,30 @@ export function AppRail({
   onAppSelected,
   onNewTopicClicked,
 }: AppRailProps): JSX.Element {
+  const [opened, setOpened] = useState<Record<string, boolean>>({})
+
+  const pinned = tags.filter((t) => t.pinned).slice(0, 3)
+  const rest = tags.filter((t) => !t.pinned)
+  const groups = Object.entries(
+    rest
+      .filter((t) => !t.folder)
+      .reduce<Record<string, TagItem[]>>((acc, t) => {
+        const k = t.group ?? '标签'
+        acc[k] = acc[k] ?? []
+        acc[k].push(t)
+        return acc
+      }, {})
+  )
+  const folders = Object.entries(
+    rest
+      .filter((t) => t.folder)
+      .reduce<Record<string, TagItem[]>>((acc, t) => {
+        acc[t.folder!] = acc[t.folder!] ?? []
+        acc[t.folder!].push(t)
+        return acc
+      }, {})
+  )
+
   return (
     <nav className={s.rail} aria-label="应用">
       <div className={s.top}>
@@ -68,16 +103,67 @@ export function AppRail({
             <Icon name="plus" size={14} />
           </button>
         </div>
-        <ul className={s.tagList}>
-          {tags.map((t) => (
-            <li key={t}>
-              <button type="button" className={s.tag}>
-                <span className={s.hash}>#</span>
-                {t}
+
+        {pinned.length > 0 ? (
+          <ul className={s.tagList}>
+            {pinned.map((t) => (
+              <li key={t.name}>
+                <button type="button" className={`${s.tag} ${s.pinned}`}>
+                  <span className={s.pin} aria-hidden="true" />
+                  {t.name}
+                  {typeof t.count === 'number' ? <span className={s.tagCount}>{t.count}</span> : null}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {groups.map(([group, list]) => (
+          <section key={group} className={s.group}>
+            <div className={s.groupHead}>{group}</div>
+            <ul className={s.tagList}>
+              {list.map((t) => (
+                <li key={t.name}>
+                  <button type="button" className={s.tag}>
+                    <span className={s.hash}>#</span>
+                    {t.name}
+                    {typeof t.count === 'number' ? <span className={s.tagCount}>{t.count}</span> : null}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        {folders.map(([name, list]) => {
+          const open = opened[name] ?? false
+          return (
+            <section key={name} className={s.group}>
+              <button
+                type="button"
+                className={s.folderHead}
+                onClick={() => setOpened((v) => ({ ...v, [name]: !open }))}
+                aria-expanded={open}
+              >
+                <Icon name={open ? 'chevronDown' : 'chevronRight'} size={12} />
+                <span className={s.folderName}>{name}</span>
+                <span className={s.folderCount}>{list.length}</span>
               </button>
-            </li>
-          ))}
-        </ul>
+              {open ? (
+                <ul className={s.tagList}>
+                  {list.map((t) => (
+                    <li key={t.name}>
+                      <button type="button" className={`${s.tag} ${s.nested}`}>
+                        <span className={s.hash}>#</span>
+                        {t.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </section>
+          )
+        })}
       </div>
     </nav>
   )

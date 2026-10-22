@@ -158,3 +158,69 @@
 .hash {
   color: var(--c-text-3);
 }
+
+.pin {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--c-accent);
+  margin-right: 6px;
+}
+
+.pinned {
+  font-weight: 500;
+}
+
+.tagCount {
+  margin-left: auto;
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--sp-2);
+}
+
+.groupHead {
+  padding: 2px var(--sp-2) 2px 6px;
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.folderHead {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 5px;
+  color: var(--c-text-2);
+  font-size: var(--fs-12);
+  text-align: left;
+}
+
+.folderHead:hover {
+  background: var(--c-sunken);
+}
+
+.folderName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folderCount {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.nested {
+  padding-left: var(--sp-5);
+}

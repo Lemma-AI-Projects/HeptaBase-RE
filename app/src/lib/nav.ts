@@ -1,4 +1,4 @@
-import type { AppItem } from '@/parts/C02-AppRail'
+import type { AppItem, TagItem } from '@/parts/C02-AppRail'
 
 export const APPS: AppItem[] = [
   { id: 'inbox', name: 'Inbox', icon: 'inbox', tint: 'linear-gradient(160deg,#8b5cf6,#7c3aed)', count: 4 },
@@ -10,7 +10,20 @@ export const APPS: AppItem[] = [
   { id: 'chat', name: 'AI 对话', icon: 'chat', tint: 'linear-gradient(160deg,#14b8a6,#0d9488)' },
 ]
 
-export const TAGS = ['间隔重复', '记忆', '待读', 'FSRS']
+export const TAGS: TagItem[] = [
+  { name: '间隔重复', pinned: true, count: 38 },
+  { name: 'FSRS', pinned: true, count: 12 },
+  { name: '待验证', pinned: true, count: 7 },
+  { name: '记忆', count: 24 },
+  { name: '提取练习', count: 19 },
+  { name: '合意困难', count: 11 },
+  { name: '读书笔记', folder: '学习科学', count: 46 },
+  { name: '论文摘要', folder: '学习科学', count: 22 },
+  { name: '实验记录', folder: '学习科学', count: 9 },
+  { name: '法语', folder: '语言', count: 31 },
+  { name: '日语', folder: '语言', count: 14 },
+  { name: '写作素材', folder: '输出', count: 27 },
+]
 
 export const TABS = [
   { id: '/s01', name: '今日' },
