@@ -1,0 +1,299 @@
+.page {
+  height: 100%;
+  overflow: auto;
+  padding: var(--sp-6) var(--sp-6) 120px;
+  background: var(--c-canvas);
+}
+
+.head {
+  max-width: 1120px;
+  margin: 0 auto var(--sp-6);
+}
+
+.head h1 {
+  font-size: var(--fs-24);
+  line-height: var(--lh-24);
+  font-weight: 600;
+}
+
+.head p {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-13);
+  color: var(--c-text-2);
+}
+
+.row {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--sp-4) 0;
+  border-top: 0.5px solid var(--c-line);
+}
+
+.rowHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.rowHead h2 {
+  font-size: var(--fs-14);
+  line-height: var(--lh-14);
+  font-weight: 500;
+}
+
+.rowHead p {
+  font-size: var(--fs-12);
+  color: var(--c-text-3);
+}
+
+.rowBody {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4) var(--sp-5);
+  align-items: flex-start;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.cellBody {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 32px;
+}
+
+.cellLabel {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.inputW {
+  width: 200px;
+}
+
+.dividerW {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: 200px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.menuItem {
+  padding: 6px var(--sp-2);
+  border-radius: 6px;
+  font-size: var(--fs-13);
+  color: var(--c-text);
+}
+
+.menuItem:hover {
+  background: var(--c-sunken);
+}
+
+.menuSep {
+  height: 0.5px;
+  background: var(--c-line);
+  margin: var(--sp-1) 0;
+}
+
+.danger {
+  color: var(--c-danger);
+}
+
+.anchorDot {
+  width: 1px;
+  height: 1px;
+}
+
+.hint {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.sectionStage {
+  position: relative;
+  width: 1130px;
+  height: 220px;
+}
+
+.edgeStage {
+  position: relative;
+  width: 1000px;
+  height: 180px;
+}
+
+.textStage {
+  position: relative;
+  width: 100%;
+  height: 260px;
+}
+
+.mediaInline {
+  position: relative;
+  height: 220px;
+}
+
+.floatStage {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--r-1);
+  background: var(--c-canvas);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+  overflow: hidden;
+}
+
+/* 五态表 */
+.grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gridRow {
+  display: grid;
+  grid-template-columns: 96px repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
+  align-items: center;
+  padding: var(--sp-2) 0;
+  border-top: 0.5px solid var(--c-line);
+}
+
+.gridHead {
+  border-top: 0;
+  padding-bottom: var(--sp-1);
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.gridPart {
+  font-size: var(--fs-12);
+  color: var(--c-text-2);
+  white-space: nowrap;
+}
+
+.gridCell {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.na {
+  color: var(--c-text-3);
+  font-size: var(--fs-12);
+}
+
+.muted {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.anchorBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-2);
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 1px var(--c-line-strong);
+  font-size: var(--fs-12);
+  color: var(--c-text-2);
+}
+
+/* 四向翻转舞台 */
+.flipStage {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: var(--r-1);
+  background: var(--c-canvas);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}
+
+.flipSpot {
+  position: absolute;
+}
+
+.footnote {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.miniSection {
+  position: relative;
+  width: 168px;
+  height: 100px;
+}
+
+.miniText {
+  position: relative;
+  width: 168px;
+  height: 40px;
+}
+
+.miniMedia {
+  position: relative;
+  width: 168px;
+  height: 108px;
+}
+
+.miniDashed {
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+  background: var(--c-canvas);
+}
+
+.floatCell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 190px;
+}
+
+.floatCell .cellBody {
+  width: 190px;
+}
+
+.floatCell .floatStage {
+  width: 190px;
+  height: 320px;
+}
+
+.toolStage {
+  position: relative;
+  width: 120px;
+  height: 300px;
+  border-radius: var(--r-1);
+  background: var(--c-canvas);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}
+
+.dockStage {
+  position: relative;
+  width: 250px;
+  height: 90px;
+  border-radius: var(--r-1);
+  background: var(--c-canvas);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}
+
+.statusStage {
+  position: relative;
+  width: 320px;
+  height: 64px;
+  border-radius: var(--r-1);
+  background: var(--c-canvas);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}

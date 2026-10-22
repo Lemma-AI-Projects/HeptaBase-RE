@@ -1,0 +1,144 @@
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.draft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.draftHead {
+  font-size: var(--fs-12);
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+.quote {
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+  color: var(--c-text-2);
+  background: var(--c-sunken);
+  border-radius: 6px;
+  padding: var(--sp-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.source {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.draftActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 76px;
+  transform: translateX(-50%);
+  z-index: 80;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-full);
+  background: var(--c-text);
+  color: var(--c-panel);
+  font-size: var(--fs-12);
+  box-shadow: var(--sh-2);
+  animation: toastIn var(--dur-2) var(--ease-out);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3);
+  font-size: var(--fs-13);
+  font-weight: 500;
+}
+
+.panelBody {
+  flex: 1;
+  overflow: auto;
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.empty {
+  margin: 0;
+  font-size: var(--fs-12);
+  line-height: 1.7;
+  color: var(--c-text-3);
+}
+
+.excerpt {
+  position: relative;
+  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-3);
+  border-radius: var(--r-1);
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}
+
+.colorDot {
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  width: 4px;
+  height: calc(100% - 20px);
+  border-radius: var(--r-full);
+  background: var(--c-yellow-solid);
+}
+
+.colorDot[data-color='green'] {
+  background: var(--c-green-solid);
+}
+
+.colorDot[data-color='blue'] {
+  background: var(--c-blue-solid);
+}
+
+.colorDot[data-color='red'] {
+  background: var(--c-red-solid);
+}
+
+.excerptText {
+  margin: 0 0 4px;
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+  color: var(--c-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.excerptSrc {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}

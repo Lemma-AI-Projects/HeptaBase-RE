@@ -1,0 +1,128 @@
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  background: var(--c-canvas);
+}
+
+.edgeLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cardWrap {
+  position: absolute;
+}
+
+.readonlyTag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-full);
+  background: var(--c-sunken);
+  color: var(--c-text-3);
+  font-size: var(--fs-11);
+}
+
+/* 右栏（Stage 2 只为占位与说明，不是 C05 的完整实现） */
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--sp-3) 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-3) var(--sp-2);
+  font-size: var(--fs-13);
+  font-weight: 500;
+}
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.value {
+  font-size: var(--fs-13);
+  color: var(--c-text);
+}
+
+.note {
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+  color: var(--c-text-2);
+}
+
+.keys {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--fs-12);
+  color: var(--c-text-2);
+}
+
+.keys kbd {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: var(--c-sunken);
+  font-family: inherit;
+  font-size: var(--fs-11);
+  color: var(--c-text);
+  text-align: center;
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3200px;
+  height: 2400px;
+  z-index: 0;
+}
+
+.secHit {
+  position: absolute;
+  z-index: 2;
+  cursor: default;
+}
+
+.obj {
+  position: absolute;
+  z-index: 5;
+  cursor: grab;
+}
+
+.obj:active {
+  cursor: grabbing;
+}
+
+.hint {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+  white-space: nowrap;
+}

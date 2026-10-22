@@ -1,0 +1,151 @@
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--c-canvas);
+  padding: var(--sp-6) var(--sp-4) 120px;
+}
+
+.article {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  background: var(--c-panel);
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 0 1px var(--c-line), var(--sh-1);
+  padding: var(--sp-6) 56px 40px;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.crumb {
+  color: var(--c-text-2);
+  border-radius: 4px;
+}
+
+.crumb:hover {
+  color: var(--c-accent);
+}
+
+.slash {
+  opacity: 0.5;
+}
+
+.crumbCurrent {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mode {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  background: var(--c-accent-weak);
+  color: var(--c-accent);
+  font-size: var(--fs-11);
+}
+
+.body {
+  margin-top: var(--sp-4);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-3);
+  border-top: 0.5px solid var(--c-line);
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.dot {
+  width: 2px;
+  height: 2px;
+  border-radius: var(--r-full);
+  background: var(--c-text-3);
+}
+
+/* 右栏 */
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panelHead {
+  padding: var(--sp-3) var(--sp-3) var(--sp-2);
+}
+
+.seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--r-2);
+  background: var(--c-sunken);
+}
+
+.segOn,
+.segOff {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: var(--fs-12);
+}
+
+.segOn {
+  background: var(--c-panel);
+  color: var(--c-text);
+  box-shadow: var(--sh-1);
+}
+
+.segOff {
+  color: var(--c-text-2);
+}
+
+.segOff:hover {
+  color: var(--c-text);
+}
+
+.panelBody {
+  flex: 1;
+  overflow: auto;
+  padding: 0 var(--sp-3) var(--sp-4);
+}
+
+.toc {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-top: var(--sp-2);
+}
+
+.tocItem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 6px var(--sp-2);
+  border-radius: 6px;
+  text-align: left;
+  font-size: var(--fs-12);
+  color: var(--c-text-2);
+}
+
+.tocItem:hover {
+  background: var(--c-sunken);
+  color: var(--c-text);
+}
+
+.tocNum {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+  font-variant-numeric: tabular-nums;
+}
