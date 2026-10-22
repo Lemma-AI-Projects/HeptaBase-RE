@@ -1,4 +1,4 @@
-import { useRef, type JSX } from 'react'
+import { useRef, useState, type JSX } from 'react'
 import type { PdfPage } from '@/lib/pdf-pages'
 import s from './C36-PdfReader.module.css'
 
@@ -23,6 +23,13 @@ export function PdfReader({
   onSelection?: (sel: PdfSelection | null) => void
 }): JSX.Element {
   const ref = useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = useState(1)
+  const steps = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2]
+  const stepTo = (dir: -1 | 1) => {
+    const i = steps.findIndex((s) => s >= zoom - 0.001)
+    const j = Math.min(steps.length - 1, Math.max(0, (i < 0 ? steps.length - 1 : i) + dir))
+    setZoom(steps[j])
+  }
 
   const handleUp = () => {
     const sel = window.getSelection()
@@ -57,9 +64,21 @@ export function PdfReader({
     <div className={s.reader} ref={ref} onMouseUp={handleUp}>
       <div className={s.toolbar}>
         <span className={s.file}>{file}</span>
-        <span className={s.pages}>{pages.length} 页</span>
+        <div className={s.zoomer}>
+          <button type="button" onClick={() => stepTo(-1)} aria-label="缩小" disabled={zoom <= 0.5}>
+            −
+          </button>
+          <button type="button" className={s.pct} onClick={() => setZoom(1)} title="回到 100%">
+            {Math.round(zoom * 100)}%
+          </button>
+          <button type="button" onClick={() => stepTo(1)} aria-label="放大" disabled={zoom >= 2}>
+            +
+          </button>
+          <span className={s.pages}>{pages.length} 页</span>
+        </div>
       </div>
 
+      <div className={s.sheet} style={{ zoom }}>
       {pages.map((page) => (
         <article key={page.page} className={s.page}>
           <header className={s.running}>
@@ -84,6 +103,7 @@ export function PdfReader({
           <footer className={s.footer}>{page.page}</footer>
         </article>
       ))}
+      </div>
     </div>
   )
 }

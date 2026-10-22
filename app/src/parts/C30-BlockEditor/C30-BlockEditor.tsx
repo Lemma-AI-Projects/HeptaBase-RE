@@ -1,8 +1,11 @@
 import {
   useLayoutEffect,
   useRef,
+  useState,
+  type DragEvent as ReactDragEvent,
   type JSX,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
 } from 'react'
 import type { Block } from '@/lib/blocks'
 import { Inline } from '@/lib/renderInline'
@@ -65,6 +68,33 @@ function Editable({
   )
 }
 
+
+/** 把 contentEditable 的 DOM 收回成 markdown 文本：<mark> → ==x==，<br>/<div> → 换行 */
+function fromHtml(el: HTMLElement): string {
+  let out = ''
+  const walk = (n: Node) => {
+    if (n.nodeType === Node.TEXT_NODE) {
+      out += (n.nodeValue ?? '').replace(/\u00a0/g, ' ')
+      return
+    }
+    if (!(n instanceof HTMLElement)) return
+    if (n.tagName === 'BR') {
+      out += '\n'
+      return
+    }
+    if (n.tagName === 'MARK') {
+      const inner = (n.textContent ?? '').replace(/\n/g, ' ')
+      out += `==${inner}==`
+      return
+    }
+    const blockish = n.tagName === 'DIV' || n.tagName === 'P'
+    if (blockish && out && !out.endsWith('\n')) out += '\n'
+    n.childNodes.forEach(walk)
+  }
+  el.childNodes.forEach(walk)
+  return out.replace(/\n+$/, '')
+}
+
 const caretAtStart = (el: HTMLElement) => {
   const sel = window.getSelection()
   if (!sel || sel.rangeCount === 0) return false
@@ -112,7 +142,7 @@ export function BlockEditor({
   const remove = (id: string) => commit(blocks.filter((b) => b.id !== id))
 
   const onTextInput = (block: Block, el: HTMLDivElement) => {
-    const text = el.textContent ?? ''
+    const text = fromHtml(el)
     if (text === '/') {
       onSlash?.(block.id, '', el.getBoundingClientRect())
       return
@@ -191,8 +221,86 @@ export function BlockEditor({
     }
   }
 
+  /* ---------- 拖动换位 ---------- */
+  const docRef = useRef<HTMLDivElement>(null)
+  const [grip, setGrip] = useState<{ top: number; blockId: string } | null>(null)
+  const [dragId, setDragId] = useState<string | null>(null)
+  const [dropIndex, setDropIndex] = useState<number | null>(null)
+  const [dropTop, setDropTop] = useState(0)
+
+  const blockEls = (): HTMLElement[] => {
+    const doc = docRef.current
+    if (!doc) return []
+    return Array.from(doc.children).filter(
+      (el): el is HTMLElement =>
+        el instanceof HTMLElement && !el.dataset.role
+    )
+  }
+
+  const onDocMove = (e: ReactMouseEvent<HTMLDivElement>) => {
+    if (!editable || dragId) return
+    const doc = docRef.current
+    if (!doc) return
+    let el = e.target as HTMLElement | null
+    while (el && el.parentElement !== doc) el = el.parentElement
+    if (!el || el.dataset.role) {
+      setGrip(null)
+      return
+    }
+    const i = blockEls().indexOf(el)
+    if (i < 0) {
+      setGrip(null)
+      return
+    }
+    setGrip({ top: el.offsetTop + 2, blockId: blocks[i].id })
+  }
+
+  const onDocDragOver = (e: ReactDragEvent<HTMLDivElement>) => {
+    if (!dragId) return
+    e.preventDefault()
+    const doc = docRef.current
+    if (!doc) return
+    const els = blockEls()
+    if (els.length === 0) return
+    const y = e.clientY - doc.getBoundingClientRect().top
+    let idx = els.length
+    for (let i = 0; i < els.length; i++) {
+      if (y < els[i].offsetTop + els[i].offsetHeight / 2) {
+        idx = i
+        break
+      }
+    }
+    const last = els[els.length - 1]
+    setDropIndex(idx)
+    setDropTop(idx < els.length ? els[idx].offsetTop - 4 : last.offsetTop + last.offsetHeight + 2)
+  }
+
+  const onDocDrop = (e: ReactDragEvent<HTMLDivElement>) => {
+    if (!dragId || dropIndex === null) return
+    e.preventDefault()
+    const from = blocks.findIndex((b) => b.id === dragId)
+    setDragId(null)
+    setDropIndex(null)
+    if (from < 0) return
+    const next = [...blocks]
+    const [moved] = next.splice(from, 1)
+    const insert = from < dropIndex ? dropIndex - 1 : dropIndex
+    if (insert === from) return
+    next.splice(insert, 0, moved)
+    commit(next)
+  }
+
   return (
-    <div className={s.doc} data-editable={editable} onClick={() => onEditRequested?.()}>
+    <div
+      className={s.doc}
+      data-editable={editable}
+      ref={docRef}
+      onClick={() => onEditRequested?.()}
+      onMouseMove={onDocMove}
+      onMouseLeave={() => setGrip(null)}
+      onDragOver={onDocDragOver}
+      onDrop={onDocDrop}
+    >
       {blocks.map((block) => {
         const text = block.text ?? ''
         switch (block.type) {
@@ -256,7 +364,7 @@ export function BlockEditor({
                         resetKey={resetKey}
                         onInput={(el) => {
                           const items = [...(block.items ?? [])]
-                          items[i] = el.textContent ?? ''
+                          items[i] = fromHtml(el)
                           patch(block.id, { items })
                         }}
                         onKeyDown={(e, el) => onItemKey(block, i, e, el)}
@@ -297,7 +405,7 @@ export function BlockEditor({
                           resetKey={resetKey}
                           onInput={(el) => {
                             const items = [...(block.items ?? [])]
-                            items[i] = el.textContent ?? ''
+                            items[i] = fromHtml(el)
                             patch(block.id, { items })
                           }}
                           onKeyDown={(e, el) => onItemKey(block, i, e, el)}
@@ -358,6 +466,33 @@ export function BlockEditor({
             return <hr key={block.id} className={s.hr} />
         }
       })}
+
+      {editable && grip ? (
+        <div
+          className={s.grip}
+          data-role="grip"
+          style={{ top: grip.top }}
+          draggable
+          title="拖动换位"
+          onDragStart={(e) => {
+            setDragId(grip.blockId)
+            e.dataTransfer.effectAllowed = 'move'
+            e.dataTransfer.setData('text/plain', grip.blockId)
+          }}
+          onDragEnd={() => {
+            setDragId(null)
+            setDropIndex(null)
+          }}
+        >
+          <span className={s.dots} />
+          <span className={s.dots} />
+          <span className={s.dots} />
+        </div>
+      ) : null}
+
+      {editable && dragId && dropIndex !== null ? (
+        <div className={s.dropLine} data-role="line" style={{ top: dropTop }} />
+      ) : null}
     </div>
   )
 }
