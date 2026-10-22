@@ -73,9 +73,9 @@
 | 阶段 | 状态 | 备注 |
 | --- | --- | --- |
 | Stage 1（规格） | ✅ v2 完成，待评审 | 本文件夹 |
-| Stage 2 | ✅ 完成（T2 待真人测） | [Stage2/04-验收记录.md](Stage2/04-验收记录.md)：12 ✅ + 1 ⚠️ |
-| Stage 3 | ✅ 三屏与摘录闭环 | [Stage3/README.md](Stage3/README.md) §7 |
-| Stage 4 | 🟡 主体可交互 | [Stage4/README.md](Stage4/README.md)：11/13 项 |
-| Stage 5 | 🟡 主体已可用 | [Stage5/README.md](Stage5/README.md)：8/10 项，每周回顾与增一减一未做 |
-| Stage 6 | 🟡 主体可用 | [Stage6/README.md](Stage6/README.md)：7/10 项，标签分组/快捷键表/数据规模未达标 |
+| Stage 2 | ✅ 完成（T2 待真人测） | [Stage2/04-验收记录.md](Stage2/04-验收记录.md)；测试材料见 [T2-辨识测试.md](T2-辨识测试.md) |
+| Stage 3 | ✅ 12/13 | [Stage3/README.md](Stage3/README.md) §7（3.10 视频字幕仍未做） |
+| Stage 4 | ✅ 13/13 | [Stage4/README.md](Stage4/README.md) §6 手感基线（录屏对比缺） |
+| Stage 5 | ✅ 10/10 | [Stage5/README.md](Stage5/README.md) §6 增一减一 |
+| Stage 6 | ✅ 10/10 | [Stage6/README.md](Stage6/README.md)（虚拟滚动与看板拖拽另记） |
 | Stage 7 | ⏳ 未开始 | 见 [04-阶段任务与验收.md](04-阶段任务与验收.md) |
