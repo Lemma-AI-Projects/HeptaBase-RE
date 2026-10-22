@@ -30,5 +30,5 @@ export const DUR = {
   move: 'var(--dur-3)',
 } as const
 
-export const ZOOM_MIN = 0.1
-export const ZOOM_MAX = 4
+export const ZOOM_MIN = 0.05
+export const ZOOM_MAX = 8

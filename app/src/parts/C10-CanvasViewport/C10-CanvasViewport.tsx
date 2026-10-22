@@ -27,45 +27,51 @@ export function CanvasViewport({
   const [spaceDown, setSpaceDown] = useState(false)
   const drag = useRef<{ id: number; x: number; y: number; vx: number; vy: number } | null>(null)
 
-  const zoomAt = useCallback(
-    (factor: number, clientX: number, clientY: number) => {
-      const el = rootRef.current
-      if (!el) return
-      const rect = el.getBoundingClientRect()
-      const px = clientX - rect.left
-      const py = clientY - rect.top
-      const next = clamp(viewport.zoom * factor, ZOOM_MIN, ZOOM_MAX)
-      const world = {
-        x: (px - viewport.x) / viewport.zoom,
-        y: (py - viewport.y) / viewport.zoom,
-      }
-      onViewportChange({
-        zoom: next,
-        x: px - world.x * next,
-        y: py - world.y * next,
-      })
-    },
-    [viewport, onViewportChange]
-  )
+  /* 视口以 ref 为准：同一帧内的多个 wheel 事件依次累加，不再互相覆盖 */
+  const vpRef = useRef(viewport)
+  vpRef.current = viewport
+  const cbRef = useRef(onViewportChange)
+  cbRef.current = onViewportChange
 
+  const commit = (next: { x: number; y: number; zoom: number }) => {
+    vpRef.current = next
+    cbRef.current(next)
+  }
+
+  const zoomAtRef = useRef((factor: number, clientX: number, clientY: number) => {
+    const el = rootRef.current
+    if (!el) return
+    const v = vpRef.current
+    const rect = el.getBoundingClientRect()
+    const px = clientX - rect.left
+    const py = clientY - rect.top
+    const next = clamp(v.zoom * factor, ZOOM_MIN, ZOOM_MAX)
+    const world = { x: (px - v.x) / v.zoom, y: (py - v.y) / v.zoom }
+    commit({ zoom: next, x: px - world.x * next, y: py - world.y * next })
+  })
+
+  // 只在挂载时绑一次；父组件每次重渲染不再解绑重绑
   useEffect(() => {
     const el = rootRef.current
     if (!el) return
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
+      const v = vpRef.current
       if (e.ctrlKey || e.metaKey) {
-        zoomAt(Math.exp(-e.deltaY * 0.0016), e.clientX, e.clientY)
+        zoomAtRef.current(Math.exp(-e.deltaY * 0.0016), e.clientX, e.clientY)
         return
       }
+      const step = e.deltaMode === 1 ? 16 : 1
       if (e.shiftKey) {
-        onViewportChange({ ...viewport, x: viewport.x - e.deltaY })
+        commit({ ...v, x: v.x - e.deltaY * step })
         return
       }
-      onViewportChange({ ...viewport, y: viewport.y - e.deltaY })
+      commit({ ...v, y: v.y - e.deltaY * step })
     }
     el.addEventListener('wheel', onWheel, { passive: false })
     return () => el.removeEventListener('wheel', onWheel)
-  }, [viewport, onViewportChange, zoomAt])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -99,15 +105,15 @@ export function CanvasViewport({
           id: e.pointerId,
           x: e.clientX,
           y: e.clientY,
-          vx: viewport.x,
-          vy: viewport.y,
+          vx: vpRef.current.x,
+          vy: vpRef.current.y,
         }
       }}
       onPointerMove={(e) => {
         const d = drag.current
         if (!d || d.id !== e.pointerId) return
-        onViewportChange({
-          ...viewport,
+        commit({
+          ...vpRef.current,
           x: d.vx + (e.clientX - d.x),
           y: d.vy + (e.clientY - d.y),
         })
