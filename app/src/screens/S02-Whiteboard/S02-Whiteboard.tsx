@@ -26,6 +26,7 @@ import { AppTabs } from '../AppTabs'
 import { BOARD } from '@/fixtures/board-spaced-repetition'
 import { CurvesSvg, FsrsSvg } from '@/fixtures/assets/CurvesSvg'
 import { anchorOf, boundsOf, initBoard, snapMove, useBoard, type Guide, type Obj } from '@/lib/board-state'
+import { bezierMid, edgePath, type Side } from '@/lib/board-layout'
 import { APPS, TAGS } from '@/lib/nav'
 import { saveViewport, loadViewport } from '@/lib/store'
 import { navigate } from '@/lib/hash-route'
@@ -67,6 +68,245 @@ export function S02Whiteboard({
   const [rightOpen, setRightOpen] = useState(true)
   const [focusMode, setFocusMode] = useState(false)
   const [edgeDrag, setEdgeDrag] = useState<{ id: string; which: 'from' | 'to'; x: number; y: number } | null>(null)
+  const [link, setLink] = useState<{
+    from: string
+    side: Side
+    x: number
+    y: number
+    to: string | null
+    toSide: Side
+  } | null>(null)
+  const linkRef = useRef<typeof link>(null)
+  linkRef.current = link
+  const linkStart = useRef({ x: 0, y: 0 })
+  const [bendDrag, setBendDrag] = useState<{ id: string; bend: { x: number; y: number } } | null>(null)
+  const [resize, setResize] = useState<{ id: string; w: number; h: number; x: number; y: number } | null>(null)
+  const [editing, setEditing] = useState<{ id: string; title: string; body: string } | null>(null)
+  const editingRef = useRef(editing)
+  editingRef.current = editing
+  const resizeRef = useRef<{
+    id: string
+    dir: string
+    x: number
+    y: number
+    w: number
+    h: number
+    ox: number
+    oy: number
+  } | null>(null)
+  const resizeCur = useRef<typeof resize>(null)
+  resizeCur.current = resize
+  const bendRef = useRef<typeof bendDrag>(null)
+  bendRef.current = bendDrag
+  const zoomRef = useRef(viewport.zoom)
+  zoomRef.current = viewport.zoom
+
+  const elsRef = useRef<HTMLElement[]>([])
+  const dragDelta = useRef({ dx: 0, dy: 0, moved: false })
+  const dragInfo = useRef<{ ids: string[]; sx: number; sy: number } | null>(null)
+  const panComp = useRef({ x: 0, y: 0 })
+  const pointerPos = useRef({ x: 0, y: 0 })
+  const panRaf = useRef(0)
+  const vpRefS02 = useRef(viewport)
+  vpRefS02.current = viewport
+  const liveGuidesRef = useRef<SVGGElement>(null)
+
+  const commitEditing = () => {
+    const cur = editingRef.current
+    if (!cur) return
+    setEditing(null)
+    run((b) => {
+      const o = b.objs.find((x) => x.id === cur.id)
+      if (o) {
+        o.title = cur.title
+        o.lines = cur.body
+          .split(String.fromCharCode(10))
+          .map((s) => s.trim())
+          .filter(Boolean)
+      }
+      return b
+    })
+  }
+
+  const alignSelected = (mode: string) => {
+    run((bd) => {
+      const items = [...bd.objs, ...bd.sections].filter((o) => selected.includes(o.id))
+      if (items.length < 2) return bd
+      const l = Math.min(...items.map((o) => o.x))
+      const tp = Math.min(...items.map((o) => o.y))
+      const r = Math.max(...items.map((o) => o.x + o.w))
+      const bm = Math.max(...items.map((o) => o.y + o.h))
+      for (const o of items) {
+        if (mode === 'left') o.x = l
+        else if (mode === 'centerH') o.x = Math.round((l + r) / 2 - o.w / 2)
+        else if (mode === 'right') o.x = r - o.w
+        else if (mode === 'top') o.y = tp
+        else if (mode === 'centerV') o.y = Math.round((tp + bm) / 2 - o.h / 2)
+        else if (mode === 'bottom') o.y = bm - o.h
+      }
+      return bd
+    })
+  }
+
+  const distributeSelected = (axis: 'h' | 'v') => {
+    run((bd) => {
+      const items = [...bd.objs, ...bd.sections].filter((o) => selected.includes(o.id))
+      if (items.length < 3) return bd
+      const size = (o: { w: number; h: number }) => (axis === 'h' ? o.w : o.h)
+      const sorted = [...items].sort((p, q) => (axis === 'h' ? p.x - q.x : p.y - q.y))
+      const first = sorted[0]
+      const last = sorted[sorted.length - 1]
+      const span = axis === 'h' ? last.x + last.w - first.x : last.y + last.h - first.y
+      const sum = sorted.reduce((a, o) => a + size(o), 0)
+      const gap = (span - sum) / (sorted.length - 1)
+      // 空间不足（卡片比跨度还宽）时不动，避免越点越乱
+      if (gap < 8) return bd
+      let cur = axis === 'h' ? first.x : first.y
+      for (const o of sorted) {
+        if (axis === 'h') o.x = Math.round(cur)
+        else o.y = Math.round(cur)
+        cur += size(o) + gap
+      }
+      return bd
+    })
+  }
+
+  const startResize = (e: React.PointerEvent, id: string, dir: string) => {
+    if (e.button !== 0) return
+    e.stopPropagation()
+    e.preventDefault()
+    const o = board.objs.find((x) => x.id === id)
+    if (!o) return
+    resizeRef.current = { id, dir, x: e.clientX, y: e.clientY, w: o.w, h: o.h, ox: o.x, oy: o.y }
+    setResize({ id, w: o.w, h: o.h, x: o.x, y: o.y })
+  }
+
+  useEffect(() => {
+    if (!resize) return
+    const onMove = (e: PointerEvent) => {
+      const r = resizeRef.current
+      if (!r) return
+      const z = zoomRef.current
+      const dx = (e.clientX - r.x) / z
+      const dy = (e.clientY - r.y) / z
+      let w = r.w
+      let h = r.h
+      let ox = r.ox
+      let oy = r.oy
+      if (r.dir.includes('e')) w = r.w + dx
+      if (r.dir.includes('s')) h = r.h + dy
+      if (r.dir.includes('w')) {
+        w = r.w - dx
+        ox = r.ox + dx
+      }
+      if (r.dir.includes('n')) {
+        h = r.h - dy
+        oy = r.oy + dy
+      }
+      w = Math.max(120, Math.round(w))
+      h = Math.max(80, Math.round(h))
+      if (r.dir.includes('w')) ox = r.ox + (r.w - w)
+      if (r.dir.includes('n')) oy = r.oy + (r.h - h)
+      setResize({ id: r.id, w, h, x: ox, y: oy })
+    }
+    const onUp = () => {
+      const cur = resizeCur.current
+      const r = resizeRef.current
+      setResize(null)
+      resizeRef.current = null
+      if (!cur || !r) return
+      run((b) => {
+        const o = b.objs.find((x) => x.id === cur.id)
+        if (o) {
+          o.x = cur.x
+          o.y = cur.y
+          o.w = cur.w
+          o.h = cur.h
+        }
+        return b
+      })
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resize !== null, run])
+
+  /** 拖动位移的唯一出口：pointermove 和 auto-pan 都走它 */
+  const applyDrag = (cx: number, cy: number) => {
+    const info = dragInfo.current
+    if (!info) return
+    const z = zoomRef.current
+    const rawDx = (cx - info.sx) / z + panComp.current.x
+    const rawDy = (cy - info.sy) / z + panComp.current.y
+    if (!dragDelta.current.moved && Math.hypot(rawDx, rawDy) < 3) return
+    dragDelta.current.moved = true
+    const snapped = snapMove(board, info.ids, rawDx, rawDy, z)
+    dragDelta.current.dx = snapped.dx
+    dragDelta.current.dy = snapped.dy
+    for (const el of elsRef.current) {
+      el.style.setProperty('--dx', `${snapped.dx}px`)
+      el.style.setProperty('--dy', `${snapped.dy}px`)
+    }
+    paintGuides(snapped.guides)
+  }
+
+  /** 拖到视口边缘时自动平移；平移量反向补偿到拖拽增量里，卡片仍跟手 */
+  const tickAutoPan = () => {
+    const info = dragInfo.current
+    const stage = stageRef.current
+    if (!info || !stage) {
+      panRaf.current = 0
+      return
+    }
+    const rect = stage.getBoundingClientRect()
+    const p = pointerPos.current
+    const EDGE = 48
+    let fx = 0
+    let fy = 0
+    if (p.x < rect.left + EDGE) fx = -(1 - Math.max(0, p.x - rect.left) / EDGE)
+    else if (p.x > rect.right - EDGE) fx = 1 - Math.max(0, rect.right - p.x) / EDGE
+    if (p.y < rect.top + EDGE) fy = -(1 - Math.max(0, p.y - rect.top) / EDGE)
+    else if (p.y > rect.bottom - EDGE) fy = 1 - Math.max(0, rect.bottom - p.y) / EDGE
+
+    if (Math.abs(fx) > 0.01 || Math.abs(fy) > 0.01) {
+      const SPEED = 12
+      const v = vpRefS02.current
+      const z = zoomRef.current
+      const next = { ...v, x: v.x - fx * SPEED, y: v.y - fy * SPEED }
+      vpRefS02.current = next
+      setViewport(next)
+      panComp.current.x += (fx * SPEED) / z
+      panComp.current.y += (fy * SPEED) / z
+      applyDrag(p.x, p.y)
+    }
+    panRaf.current = requestAnimationFrame(tickAutoPan)
+  }
+
+  /** 拖动中的吸附线直接写 DOM，不触发 React 重渲染 */
+  const paintGuides = (gs: Guide[]) => {
+    const g = liveGuidesRef.current
+    if (!g) return
+    while (g.firstChild) g.removeChild(g.firstChild)
+    for (const gd of gs) {
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+      if (gd.axis === 'x') {
+        l.setAttribute('x1', String(gd.pos))
+        l.setAttribute('y1', String(gd.from))
+        l.setAttribute('x2', String(gd.pos))
+        l.setAttribute('y2', String(gd.to))
+      } else {
+        l.setAttribute('x1', String(gd.from))
+        l.setAttribute('y1', String(gd.pos))
+        l.setAttribute('x2', String(gd.to))
+        l.setAttribute('y2', String(gd.pos))
+      }
+      g.appendChild(l)
+    }
+  }
   const [rightTab, setRightTab] = useState<'info' | 'ai'>('info')
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 'm0', role: 'user', text: '这三张卡的共同前提是什么？' },
@@ -144,13 +384,11 @@ export function S02Whiteboard({
     if (!interaction) return
     const onMove = (e: PointerEvent) => {
       if (interaction.type === 'drag') {
-        const dx = (e.clientX - interaction.sx) / viewport.zoom
-        const dy = (e.clientY - interaction.sy) / viewport.zoom
-        const snapped = snapMove(board, interaction.ids, dx, dy, viewport.zoom)
-        setInteraction({ ...interaction, dx: snapped.dx, dy: snapped.dy, moved: true })
-        setGuides(snapped.guides)
+        pointerPos.current = { x: e.clientX, y: e.clientY }
+        applyDrag(e.clientX, e.clientY)
         return
       }
+
       const p = toWorld(e.clientX, e.clientY)
       const rect = {
         x: Math.min(interaction.sx, p.x),
@@ -175,8 +413,27 @@ export function S02Whiteboard({
       }
     }
     const onUp = () => {
-      if (interaction.type === 'drag' && interaction.moved) {
-        const { ids, dx, dy } = interaction
+      if (interaction.type === 'drag') {
+        const { moved, dx, dy } = dragDelta.current
+        for (const el of elsRef.current) {
+          el.removeAttribute('data-dragging')
+          el.style.removeProperty('--dx')
+          el.style.removeProperty('--dy')
+        }
+        elsRef.current = []
+        dragInfo.current = null
+        if (panRaf.current) {
+          cancelAnimationFrame(panRaf.current)
+          panRaf.current = 0
+        }
+        paintGuides([])
+        dragDelta.current = { dx: 0, dy: 0, moved: false }
+        if (!moved) {
+          setInteraction(null)
+          setGuides([])
+          return
+        }
+        const ids = interaction.ids
         run((b) => {
           for (const o of b.objs) {
             if (ids.includes(o.id)) {
@@ -233,7 +490,27 @@ export function S02Whiteboard({
       setSelected(ids)
     }
     setMenu(null)
+    dragDelta.current = { dx: 0, dy: 0, moved: false }
+    dragInfo.current = { ids, sx: e.clientX, sy: e.clientY }
+    panComp.current = { x: 0, y: 0 }
+    pointerPos.current = { x: e.clientX, y: e.clientY }
+    if (!panRaf.current) panRaf.current = requestAnimationFrame(tickAutoPan)
+    elsRef.current = ids
+      .map((id) => document.querySelector(`[data-objid="${id}"]`) as HTMLElement | null)
+      .filter((x): x is HTMLElement => !!x)
+    elsRef.current.forEach((el) => el.setAttribute('data-dragging', '1'))
     setInteraction({ type: 'drag', ids, sx: e.clientX, sy: e.clientY, dx: 0, dy: 0, moved: false })
+  }
+
+  const startLink = (e: React.PointerEvent, fromId: string, side: Side) => {
+    if (e.button !== 0) return
+    e.stopPropagation()
+    e.preventDefault()
+    const p = toWorld(e.clientX, e.clientY)
+    setMenu(null)
+    setSelected([])
+    linkStart.current = { x: p.x, y: p.y }
+    setLink({ from: fromId, side, x: p.x, y: p.y, to: null, toSide: side })
   }
 
   const startMarquee = (e: React.PointerEvent) => {
@@ -266,6 +543,33 @@ export function S02Whiteboard({
           ],
         },
       ])
+      return
+    }
+    if (demo === 'multi') {
+      setSelected(['A1', 'B1', 'C1'])
+      return
+    }
+    if (demo === 'handles') {
+      setSelected(['A1'])
+      return
+    }
+    if (demo === 'anchors') {
+      setSelected([])
+      return
+    }
+    if (demo === 'link') {
+      const a = board.objs.find((o) => o.id === 'A1')
+      const b2 = board.objs.find((o) => o.id === 'B4')
+      if (a && b2) {
+        setLink({
+          from: 'A1',
+          side: 'r',
+          x: b2.x - 40,
+          y: b2.y + 40,
+          to: 'B4',
+          toSide: 'l',
+        })
+      }
       return
     }
     if (demo === 'newcard') {
@@ -390,6 +694,142 @@ export function S02Whiteboard({
     setToast('已加入复习队列 · 1 张')
   }
 
+  useEffect(() => {
+    if (!link) return
+    const onMove = (e: PointerEvent) => {
+      const l = linkRef.current
+      if (!l) return
+      const p = toWorld(e.clientX, e.clientY)
+      // 只连卡片：拖到分区空白处算空白，会在那里新建一张卡并归入该分区
+      const targets: { id: string; x: number; y: number; w: number; h: number }[] =
+        board.objs.filter((o) => o.kind === 'card')
+      // 给 8px 容差：拖到卡片边缘或锚点上也能吸附
+      const pad = 8 / Math.max(0.2, zoomRef.current)
+      const hit = targets.find(
+        (o) =>
+          o.id !== l.from &&
+          p.x > o.x - pad &&
+          p.x < o.x + o.w + pad &&
+          p.y > o.y - pad &&
+          p.y < o.y + o.h + pad
+      )
+      let side: Side = 'l'
+      if (hit) {
+        const cands: [Side, number][] = [
+          ['l', Math.abs(p.x - hit.x)],
+          ['r', Math.abs(p.x - (hit.x + hit.w))],
+          ['t', Math.abs(p.y - hit.y)],
+          ['b', Math.abs(p.y - (hit.y + hit.h))],
+        ]
+        cands.sort((a, b2) => a[1] - b2[1])
+        side = cands[0][0]
+      }
+      setLink({ ...l, x: p.x, y: p.y, to: hit?.id ?? null, toSide: side })
+    }
+    const onUp = (e: PointerEvent) => {
+      const l = linkRef.current
+      setLink(null)
+      if (!l) return
+      const p = toWorld(e.clientX, e.clientY)
+      const moved =
+        Math.hypot(p.x - linkStart.current.x, p.y - linkStart.current.y) > 2 || l.to !== null
+      const stamp = Date.now().toString(36) + Math.random().toString(36).slice(2, 5)
+      if (l.to) {
+        const target = l.to
+        run((b) => {
+          b.edges.push({
+            id: `E${stamp}`,
+            from: l.from,
+            to: target,
+            fromSide: l.side,
+            toSide: l.toSide,
+            shape: 'curve',
+            direction: 'none',
+          })
+          return b
+        })
+        return
+      }
+      if (!moved) return
+      // 空白处松手：新建一张卡并连上
+      const id = `N${stamp}`
+      const opposite: Side = l.side === 'l' ? 'r' : l.side === 'r' ? 'l' : l.side === 't' ? 'b' : 't'
+      run((b) => {
+        const host = b.sections.find(
+          (sec) => p.x > sec.x && p.x < sec.x + sec.w && p.y > sec.y && p.y < sec.y + sec.h
+        )
+        b.objs.push({
+          id,
+          kind: 'card',
+          x: Math.round(p.x - 120),
+          y: Math.round(p.y - 66),
+          w: 240,
+          h: 132,
+          color: 'yellow',
+          title: '新卡片',
+          lines: ['双击开始写'],
+          sectionId: host?.id,
+        })
+        b.edges.push({
+          id: `E${stamp}`,
+          from: l.from,
+          to: id,
+          fromSide: l.side,
+          toSide: opposite,
+          shape: 'curve',
+          direction: 'none',
+        })
+        return b
+      })
+      setSelected([id])
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+    }
+  }, [link !== null, board, run])
+
+  useEffect(() => {
+    if (!bendDrag) return
+    const onMove = (e: PointerEvent) => {
+      const cur = bendRef.current
+      if (!cur) return
+      const ed = board.edges.find((x) => x.id === cur.id)
+      if (!ed) return
+      const from =
+        board.objs.find((o) => o.id === ed.from) ?? board.sections.find((o) => o.id === ed.from)
+      const to =
+        board.objs.find((o) => o.id === ed.to) ?? board.sections.find((o) => o.id === ed.to)
+      if (!from || !to) return
+      const p = toWorld(e.clientX, e.clientY)
+      const mid0 = bezierMid(
+        anchorOf(from, ed.fromSide),
+        anchorOf(to, ed.toSide),
+        ed.fromSide,
+        ed.toSide
+      )
+      setBendDrag({ id: cur.id, bend: { x: p.x - mid0.x, y: p.y - mid0.y } })
+    }
+    const onUp = () => {
+      const cur = bendRef.current
+      setBendDrag(null)
+      if (!cur) return
+      run((b) => {
+        const e2 = b.edges.find((x) => x.id === cur.id)
+        if (e2) e2.bend = cur.bend
+        return b
+      })
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+    }
+  }, [bendDrag !== null, board, run])
+
   /* ---------- 键盘 ---------- */
 
   useEffect(() => {
@@ -424,12 +864,57 @@ export function S02Whiteboard({
         })
         setSelected([])
       }
+      if (e.key === 'Escape' && editingRef.current) {
+        e.preventDefault()
+        commitEditing()
+        return
+      }
       if (e.key === 'Escape') {
         setSelected([])
         setMenu(null)
         setFocusMode(false)
       }
       if (e.key.toLowerCase() === 'f' && selected.length > 0) setFocusMode((v) => !v)
+      if (e.code === 'Digit2' && e.shiftKey) {
+        e.preventDefault()
+        const objs = [...board.objs, ...board.sections].filter((o) => selected.includes(o.id))
+        const box = objs.length
+          ? {
+              x: Math.min(...objs.map((o) => o.x)),
+              y: Math.min(...objs.map((o) => o.y)),
+              w: Math.max(...objs.map((o) => o.x + o.w)) - Math.min(...objs.map((o) => o.x)),
+              h: Math.max(...objs.map((o) => o.y + o.h)) - Math.min(...objs.map((o) => o.y)),
+            }
+          : bounds
+        const { w, h } = stageSize()
+        const z = Math.min(4, Math.max(0.1, Math.min((w - 80) / box.w, (h - 80) / box.h)))
+        setViewport({
+          zoom: z,
+          x: (w - box.w * z) / 2 - box.x * z,
+          y: (h - box.h * z) / 2 - box.y * z,
+        })
+      }
+      if (e.key.startsWith('Arrow') && selected.length > 0) {
+        e.preventDefault()
+        const step = e.shiftKey ? 10 : 1
+        const dx = e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0
+        const dy = e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0
+        run((b) => {
+          for (const o of b.objs) {
+            if (selected.includes(o.id)) {
+              o.x += dx
+              o.y += dy
+            }
+          }
+          for (const sec of b.sections) {
+            if (selected.includes(sec.id)) {
+              sec.x += dx
+              sec.y += dy
+            }
+          }
+          return b
+        })
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -580,10 +1065,8 @@ export function S02Whiteboard({
     return 0.15
   }
 
-  const dragOf = (id: string) =>
-    interaction?.type === 'drag' && interaction.ids.includes(id)
-      ? `translate3d(${interaction.dx}px, ${interaction.dy}px, 0)`
-      : undefined
+  // 拖动位移改由 CSS 变量 + data-dragging 驱动，不经过 React
+  const dragOf = (_id: string): undefined => undefined
 
   return (
     <AppShell
@@ -605,7 +1088,7 @@ export function S02Whiteboard({
               </span>
             }
           />
-          <div className={s.stage} ref={stageRef}>
+          <div className={s.stage} ref={stageRef} data-show-anchors={demo === 'anchors' ? '1' : undefined}>
             {subSec ? (
               <div className={s.crumb}>
                 <Breadcrumb
@@ -617,7 +1100,33 @@ export function S02Whiteboard({
                 />
               </div>
             ) : null}
-            <CanvasViewport viewport={viewport} tool="select" onViewportChange={setViewport}>
+            <CanvasViewport
+              viewport={viewport}
+              tool="select"
+              onViewportChange={setViewport}
+              onBlankDoubleClick={(pt) => {
+                const id = `N${Date.now().toString(36)}`
+                const host = board.sections.find(
+                  (sec) => pt.x > sec.x && pt.x < sec.x + sec.w && pt.y > sec.y && pt.y < sec.y + sec.h
+                )
+                run((b) => {
+                  b.objs.push({
+                    id,
+                    kind: 'card',
+                    x: Math.round(pt.x - 120),
+                    y: Math.round(pt.y - 66),
+                    w: 240,
+                    h: 132,
+                    color: 'yellow',
+                    title: '新卡片',
+                    lines: ['双击开始写'],
+                    sectionId: host?.id,
+                  })
+                  return b
+                })
+                setSelected([id])
+              }}
+            >
               <div
                 className={s.bg}
                 data-canvas-bg
@@ -649,6 +1158,20 @@ export function S02Whiteboard({
                       shape={ed.shape}
                       direction={ed.direction}
                       label={ed.label}
+                      zoom={viewport.zoom}
+                      hideLabel
+                      bend={bendDrag?.id === ed.id ? bendDrag.bend : ed.bend}
+                      onBendDown={(e) => {
+                        e.stopPropagation()
+                        setBendDrag({ id: ed.id, bend: ed.bend ?? { x: 0, y: 0 } })
+                      }}
+                      onBendReset={() =>
+                        run((b) => {
+                          const e2 = b.edges.find((x) => x.id === ed.id)
+                          if (e2) delete e2.bend
+                          return b
+                        })
+                      }
                       selected={selected.includes(ed.id)}
                       onSelect={() => setSelected([ed.id])}
                       onHandleDown={(which, e) => {
@@ -658,12 +1181,68 @@ export function S02Whiteboard({
                     />
                   )
                 })}
+                {link
+                  ? (() => {
+                      const f =
+                        board.objs.find((x) => x.id === link.from) ??
+                        board.sections.find((x) => x.id === link.from)
+                      if (!f) return null
+                      return (
+                        <path
+                          d={edgePath(
+                            anchorOf(f, link.side),
+                            { x: link.x, y: link.y },
+                            link.side,
+                            link.toSide,
+                            'curve'
+                          )}
+                          fill="none"
+                          stroke="var(--c-accent)"
+                          strokeWidth={1.5}
+                          strokeDasharray="4 3"
+                          pointerEvents="none"
+                        />
+                      )
+                    })()
+                  : null}
+                <g ref={liveGuidesRef} className={s.liveGuides} />
+              </svg>
+
+              {/* 标签单独一层，压在卡片之上，线在卡片之下 */}
+              <svg className={s.labelLayer} width={3200} height={2400} aria-hidden="true">
+                {visEdges.map((ed) => {
+                  if (!ed.label) return null
+                  const from =
+                    board.objs.find((o) => o.id === ed.from) ??
+                    board.sections.find((o) => o.id === ed.from)
+                  const to =
+                    board.objs.find((o) => o.id === ed.to) ??
+                    board.sections.find((o) => o.id === ed.to)
+                  if (!from || !to) return null
+                  const mid = bezierMid(
+                    anchorOf(from, ed.fromSide),
+                    anchorOf(to, ed.toSide),
+                    ed.fromSide,
+                    ed.toSide
+                  )
+                  const w = ed.label.length * 13 + 16
+                  return (
+                    <g key={ed.id} className={s.edgeLabel} transform={`translate(${mid.x} ${mid.y})`}>
+                      <rect x={-w / 2} y={-9} width={w} height={18} rx={8} />
+                      <text textAnchor="middle" dominantBaseline="central">
+                        {ed.label}
+                      </text>
+                    </g>
+                  )
+                })}
               </svg>
 
               {visSections.map((sec) => (
                 <div
                   key={sec.id}
                   className={s.secHit}
+                  data-objid={sec.id}
+                  data-link-target={link?.to === sec.id ? '1' : undefined}
                   style={{
                     left: sec.x,
                     top: sec.y - 28,
@@ -692,6 +1271,11 @@ export function S02Whiteboard({
                     collapsed={sec.collapsed}
                     selected={selected.includes(sec.id)}
                   />
+                  <span className={s.anchors} aria-hidden="true">
+                    {(['t', 'r', 'b', 'l'] as const).map((sd) => (
+                      <i key={sd} data-side={sd} onPointerDown={(e) => startLink(e, sec.id, sd)} />
+                    ))}
+                  </span>
                 </div>
               ))}
 
@@ -705,17 +1289,25 @@ export function S02Whiteboard({
                   <div
                     key={o.id}
                     className={s.obj}
+                    data-objid={o.id}
                     data-object={o.kind}
+                    data-link-target={link?.to === o.id ? '1' : undefined}
+                    data-selected={selected.includes(o.id) ? '1' : undefined}
                     style={{
-                      left: o.x,
-                      top: o.y,
+                      left: resize?.id === o.id ? resize.x : o.x,
+                      top: resize?.id === o.id ? resize.y : o.y,
                       opacity: dim(o.id),
                       transform: dragOf(o.id),
                       transformOrigin: '0 0',
                     }}
                     onPointerDown={(e) => startDrag(e, o.id)}
                     onDoubleClick={() => {
-                      if (isCard) navigate('/s03')
+                      if (!isCard) return
+                      setEditing({
+                        id: o.id,
+                        title: o.title ?? '',
+                        body: (o.lines ?? []).join(String.fromCharCode(10)),
+                      })
                     }}
                     onContextMenu={(e) => {
                       e.preventDefault()
@@ -724,7 +1316,40 @@ export function S02Whiteboard({
                       setMenu({ x: e.clientX, y: e.clientY, target: 'object' })
                     }}
                   >
-                    {isCard ? (
+                    {editing && editing.id === o.id ? (
+                      <div
+                        className={s.cardEditor}
+                        style={{ width: 380, minHeight: 220 }}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onDoubleClick={(e) => e.stopPropagation()}
+                      >
+                        <input
+                          className={s.editorTitle}
+                          value={editing.title}
+                          autoFocus
+                          placeholder="标题"
+                          onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                        />
+                        <textarea
+                          className={s.editorBody}
+                          value={editing.body}
+                          placeholder="正文，一行一段"
+                          onChange={(e) => setEditing({ ...editing, body: e.target.value })}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Escape') {
+                              e.preventDefault()
+                              commitEditing()
+                            }
+                          }}
+                        />
+                        <div className={s.editorFoot}>
+                          <span>Esc 收起 · 内容自动存</span>
+                          <button type="button" onClick={commitEditing}>
+                            完成
+                          </button>
+                        </div>
+                      </div>
+                    ) : isCard ? (
                       <CardNode
                         card={{
                           id: o.id,
@@ -733,8 +1358,8 @@ export function S02Whiteboard({
                           color: o.color ?? 'gray',
                           folded: o.folded,
                         }}
-                        width={o.w}
-                        height={o.h}
+                        width={resize?.id === o.id ? resize.w : o.w}
+                        height={resize?.id === o.id ? resize.h : o.h}
                         selected={selected.includes(o.id)}
                         readonly={false}
                       />
@@ -761,6 +1386,22 @@ export function S02Whiteboard({
                         {o.media === 'curves' ? <CurvesSvg /> : <FsrsSvg />}
                       </MediaNode>
                     )}
+                    <span className={s.anchors} aria-hidden="true">
+                      {(['t', 'r', 'b', 'l'] as const).map((sd) => (
+                        <i key={sd} data-side={sd} onPointerDown={(e) => startLink(e, o.id, sd)} />
+                      ))}
+                    </span>
+                    {selected.length === 1 && selected[0] === o.id && isCard ? (
+                      <span className={s.handles}>
+                        {(['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'] as const).map((hd) => (
+                          <i
+                            key={hd}
+                            data-resize={hd}
+                            onPointerDown={(e) => startResize(e, o.id, hd)}
+                          />
+                        ))}
+                      </span>
+                    ) : null}
                   </div>
                 )
               })}
@@ -838,6 +1479,8 @@ export function S02Whiteboard({
                 count={selected.length}
                 onColor={(c) => colorOf(selected, c as CardColor)}
                 onFold={() => foldOf(selected)}
+                onAlign={alignSelected}
+                onDistribute={distributeSelected}
                 onMore={() => setMenu({ x: selRect.x + selRect.w, y: selRect.y, target: 'object' })}
                 onAi={() => undefined}
               />

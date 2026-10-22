@@ -177,3 +177,166 @@
   z-index: 30;
   max-width: calc(100% - 120px);
 }
+
+/* 拖动位移：DOM 直改 CSS 变量，React 重渲染也不会打断 */
+.obj[data-dragging],
+.secHit[data-dragging] {
+  transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0) !important;
+  z-index: 30;
+}
+
+.liveGuides line {
+  stroke: var(--c-accent);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.9;
+}
+
+/* 连线锚点：悬停卡片/分区的四条边中点冒出小圆点 */
+.anchors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms var(--ease-out);
+}
+
+.obj:hover .anchors,
+.secHit:hover .anchors,
+[data-show-anchors='1'] .anchors {
+  opacity: 1;
+}
+
+.anchors i {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 1.5px var(--c-accent);
+  pointer-events: auto;
+  cursor: crosshair;
+  transition: transform 100ms var(--ease-out), background 100ms var(--ease-out);
+}
+
+.anchors i:hover {
+  transform: scale(1.4);
+  background: var(--c-accent);
+}
+
+.anchors i[data-side='t'] { left: 50%; top: -5px; margin-left: -4.5px; }
+.anchors i[data-side='r'] { right: -5px; top: 50%; margin-top: -4.5px; }
+.anchors i[data-side='b'] { left: 50%; bottom: -5px; margin-left: -4.5px; }
+.anchors i[data-side='l'] { left: -5px; top: 50%; margin-top: -4.5px; }
+
+.obj[data-link-target],
+.secHit[data-link-target] {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: var(--r-1);
+}
+
+/* 连线标签层：在卡片之上，不挡点击 */
+.labelLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.edgeLabel rect {
+  fill: var(--c-canvas);
+  stroke: var(--c-line);
+  stroke-width: 0.5;
+}
+
+.edgeLabel text {
+  font-size: 12px;
+  fill: var(--c-text-2);
+}
+
+/* 选中时的 8 个改大小手柄；选中后隐藏连线锚点，避免叠在一起 */
+.obj[data-selected='1'] .anchors {
+  display: none;
+}
+
+.handles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.handles i {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 1.5px var(--c-accent);
+  pointer-events: auto;
+}
+
+.handles i[data-resize='nw'] { left: -5px; top: -5px; cursor: nwse-resize; }
+.handles i[data-resize='n'] { left: 50%; top: -5px; margin-left: -4px; cursor: ns-resize; }
+.handles i[data-resize='ne'] { right: -5px; top: -5px; cursor: nesw-resize; }
+.handles i[data-resize='e'] { right: -5px; top: 50%; margin-top: -4px; cursor: ew-resize; }
+.handles i[data-resize='se'] { right: -5px; bottom: -5px; cursor: nwse-resize; }
+.handles i[data-resize='s'] { left: 50%; bottom: -5px; margin-left: -4px; cursor: ns-resize; }
+.handles i[data-resize='sw'] { left: -5px; bottom: -5px; cursor: nesw-resize; }
+.handles i[data-resize='w'] { left: -5px; top: 50%; margin-top: -4px; cursor: ew-resize; }
+
+/* 就地编辑：双击卡片后，卡片位置展开一个编辑框 */
+.cardEditor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-2);
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 2px var(--c-accent), var(--sh-3);
+  z-index: 40;
+}
+
+.editorTitle {
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  font-size: var(--fs-18);
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.editorBody {
+  flex: 1;
+  min-height: 120px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--fs-13);
+  line-height: 1.7;
+  color: var(--c-text);
+}
+
+.editorFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--sp-1);
+  border-top: 0.5px solid var(--c-line);
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.editorFoot button {
+  height: 24px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-2);
+  background: var(--c-accent);
+  color: #fff;
+  font-size: var(--fs-12);
+}
