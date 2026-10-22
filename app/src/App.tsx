@@ -174,6 +174,7 @@ export function App(): JSX.Element {
           autoFit={route.query.get('fit') === '1'}
           stress={route.query.get('stress') === '1'}
           demo={route.query.get('demo') ?? undefined}
+          sub={route.query.get('sub') ?? undefined}
         />
       )}
 

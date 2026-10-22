@@ -169,3 +169,11 @@
   font-size: var(--fs-12);
   box-shadow: var(--sh-2);
 }
+
+.crumb {
+  position: absolute;
+  left: var(--sp-3);
+  top: var(--sp-3);
+  z-index: 30;
+  max-width: calc(100% - 120px);
+}

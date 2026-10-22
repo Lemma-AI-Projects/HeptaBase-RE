@@ -4,6 +4,7 @@ import { AppRail } from '@/parts/C02-AppRail'
 import { CanvasViewport, type Viewport } from '@/parts/C10-CanvasViewport'
 import { CardNode } from '@/parts/C11-CardNode'
 import { SectionBox } from '@/parts/C12-SectionBox'
+import { Breadcrumb } from '@/parts/C07-Breadcrumb'
 import { TextNode } from '@/parts/C13-TextNode'
 import { MediaNode } from '@/parts/C14-MediaNode'
 import { Edge } from '@/parts/C15-Edge'
@@ -43,6 +44,7 @@ export function S02Whiteboard({
   autoFit,
   stress = false,
   demo,
+  sub,
 }: {
   theme: 'light' | 'dark'
   onToggleTheme: () => void
@@ -50,6 +52,7 @@ export function S02Whiteboard({
   autoFit?: boolean
   stress?: boolean
   demo?: string
+  sub?: string
 }): JSX.Element {
   const stageRef = useRef<HTMLDivElement>(null)
   const { board, run, undo, redo } = useBoard(useMemo(() => initBoard(stress), [stress]))
@@ -106,6 +109,17 @@ export function S02Whiteboard({
   )
 
   useEffect(() => {
+    if (subSec) {
+      const { w, h } = stageSize()
+      const box = { x: subSec.x, y: subSec.y - 28, w: subSec.w, h: subSec.h + 28 }
+      const z = Math.min(1.4, Math.max(0.2, Math.min((w - 96) / box.w, (h - 140) / box.h)))
+      setViewport({
+        zoom: z,
+        x: (w - box.w * z) / 2 - box.x * z,
+        y: (h - box.h * z) / 2 - box.y * z + 16,
+      })
+      return
+    }
     if (autoFit) {
       fit()
       return
@@ -527,6 +541,11 @@ export function S02Whiteboard({
     }
   }, [selected, board, viewport])
 
+  const subSec = sub ? board.sections.find((x) => x.id === sub) ?? null : null
+  const visSections = subSec ? [] : board.sections
+  const visObjs = subSec ? board.objs.filter((o) => o.sectionId === subSec.id) : board.objs
+  const visEdges = subSec ? [] : board.edges
+
   const { w: stageW, h: stageH } = stageSize()
   const view = {
     x: -viewport.x / viewport.zoom,
@@ -566,6 +585,17 @@ export function S02Whiteboard({
             }
           />
           <div className={s.stage} ref={stageRef}>
+            {subSec ? (
+              <div className={s.crumb}>
+                <Breadcrumb
+                  items={[
+                    { label: '白板', onClick: () => navigate('/s02') },
+                    { label: '间隔重复：为什么、怎么排、哪里可疑', onClick: () => navigate('/s02') },
+                    { label: subSec.title, current: true },
+                  ]}
+                />
+              </div>
+            ) : null}
             <CanvasViewport viewport={viewport} tool="select" onViewportChange={setViewport}>
               <div
                 className={s.bg}
@@ -581,7 +611,7 @@ export function S02Whiteboard({
               <SnapGuides guides={guides} />
 
               <svg className={s.edgeLayer} width={3200} height={2400} aria-hidden="true">
-                {board.edges.map((ed) => {
+                {visEdges.map((ed) => {
                   const from = board.objs.find((o) => o.id === ed.from) ?? board.sections.find((o) => o.id === ed.from)
                   const to = board.objs.find((o) => o.id === ed.to) ?? board.sections.find((o) => o.id === ed.to)
                   if (!from || !to) return null
@@ -609,7 +639,7 @@ export function S02Whiteboard({
                 })}
               </svg>
 
-              {board.sections.map((sec) => (
+              {visSections.map((sec) => (
                 <div
                   key={sec.id}
                   className={s.secHit}
@@ -624,11 +654,7 @@ export function S02Whiteboard({
                   onPointerDown={(e) => startDrag(e, sec.id)}
                   onDoubleClick={(e) => {
                     e.stopPropagation()
-                    run((b) => {
-                      const target = b.sections.find((x) => x.id === sec.id)
-                      if (target) target.collapsed = !target.collapsed
-                      return b
-                    })
+                    navigate(`/s02?sub=${sec.id}`)
                   }}
                   onContextMenu={(e) => {
                     e.preventDefault()
@@ -648,7 +674,7 @@ export function S02Whiteboard({
                 </div>
               ))}
 
-              {board.objs.map((o) => {
+              {visObjs.map((o) => {
                 const hidden = o.sectionId
                   ? board.sections.find((sec) => sec.id === o.sectionId)?.collapsed
                   : false
@@ -738,8 +764,8 @@ export function S02Whiteboard({
             <Minimap
               bounds={{ x: bounds.x, y: bounds.y, w: bounds.w, h: bounds.h }}
               view={view}
-              sections={board.sections}
-              objects={board.objs.filter((o) => o.kind === 'card')}
+              sections={visSections}
+              objects={visObjs.filter((o) => o.kind === 'card')}
               onJump={(p) =>
                 setViewport({
                   ...viewport,
