@@ -24,6 +24,7 @@ export type IconName =
   | 'close'
   | 'chevronLeft'
   | 'chevronRight'
+  | 'chevronDown'
   | 'check'
   | 'sparkles'
   | 'h2'
@@ -199,6 +200,7 @@ const PATHS: Record<IconName, JSX.Element> = {
   close: <path d="m5.5 5.5 9 9M14.5 5.5l-9 9" />,
   chevronLeft: <path d="m12 5-5 5 5 5" />,
   chevronRight: <path d="m8 5 5 5-5 5" />,
+  chevronDown: <path d="m5 8 5 5 5-5" />,
   check: <path d="m4.5 10.5 3.5 3.5 7.5-8" />,
   sparkles: (
     <>

@@ -13,6 +13,7 @@ export const APPS: AppItem[] = [
 export const TAGS = ['间隔重复', '记忆', '待读', 'FSRS']
 
 export const TABS = [
+  { id: '/s01', name: '今日' },
   { id: '/s02', name: '间隔重复：为什么、怎么排、哪里可疑', pinned: true },
   { id: '/s03', name: '提取练习为什么有效' },
   { id: '/s05', name: 'Bjork & Bjork 2011.pdf' },

@@ -4,6 +4,8 @@ import { addExcerptCard, getCards } from '@/lib/store'
 import { S02Whiteboard } from '@/screens/S02-Whiteboard/S02-Whiteboard'
 import { LabPartsWall } from '@/screens/Lab-PartsWall/Lab-PartsWall'
 import { ReviewFingerprint } from '@/screens/Review-Fingerprint/Review-Fingerprint'
+import { S01Today } from '@/screens/S01-Today/S01-Today'
+import { S06Review } from '@/screens/S06-Review/S06-Review'
 import { S03Card } from '@/screens/S03-Card/S03-Card'
 import { S05Pdf } from '@/screens/S05-Pdf/S05-Pdf'
 import s from './App.module.css'
@@ -42,6 +44,17 @@ export function App(): JSX.Element {
         <LabPartsWall />
       ) : route.path === '/fp' ? (
         <ReviewFingerprint />
+      ) : route.path === '/s01' ? (
+        <S01Today
+          theme={theme}
+          onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+        />
+      ) : route.path === '/s06' ? (
+        <S06Review
+          theme={theme}
+          onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+          startFlipped={route.query.get('flipped') === '1'}
+        />
       ) : route.path === '/s03' || route.path === '/s04' ? (
         <S03Card
           theme={theme}
