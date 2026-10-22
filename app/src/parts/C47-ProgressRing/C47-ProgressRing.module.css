@@ -1,0 +1,13 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  position: absolute;
+  font-size: var(--fs-11);
+  color: var(--c-text-2);
+  font-variant-numeric: tabular-nums;
+}

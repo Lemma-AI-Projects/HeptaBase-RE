@@ -1,0 +1,74 @@
+.userRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user {
+  max-width: 88%;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-2);
+  background: var(--c-sunken);
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+  color: var(--c-text);
+}
+
+.ai {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-2);
+  background: var(--c-panel);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+}
+
+.body {
+  font-size: var(--fs-13);
+  line-height: 1.7;
+  color: var(--c-text);
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  margin-left: 2px;
+  background: var(--c-accent);
+  animation: blink 900ms steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.cites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.link {
+  font-size: var(--fs-11);
+  color: var(--c-accent);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.link:hover {
+  background: var(--c-accent-weak);
+}
+
+.sep {
+  width: 0.5px;
+  height: 12px;
+  background: var(--c-line);
+}

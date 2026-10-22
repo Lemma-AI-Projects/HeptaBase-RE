@@ -1,0 +1,24 @@
+.badge {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.on,
+.off {
+  width: 3px;
+  border-radius: 1px;
+}
+
+.on {
+  background: var(--c-accent);
+}
+
+.off {
+  background: var(--c-line-strong);
+}
+
+.badge[data-level='fuzzy'] .on {
+  background: var(--c-yellow-solid);
+}
