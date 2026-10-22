@@ -1,4 +1,4 @@
-import type { JSX } from 'react'
+import { useState, type JSX } from 'react'
 import { Icon } from '@/icons'
 import s from './C34-CardInfo.module.css'
 
@@ -25,6 +25,17 @@ export function CardInfo({
   onTitleChange,
   onBoardOpened,
 }: CardInfoProps): JSX.Element {
+  const [adding, setAdding] = useState(false)
+  const [extra, setExtra] = useState<string[]>([])
+  const [draft, setDraft] = useState('')
+
+  const commitTag = () => {
+    const v = draft.trim().replace(/^#/, '')
+    if (v && !tags.includes(v) && !extra.includes(v)) setExtra((x) => [...x, v])
+    setDraft('')
+    setAdding(false)
+  }
+
   return (
     <header className={s.head}>
       {editable ? (
@@ -47,14 +58,37 @@ export function CardInfo({
       </div>
 
       <div className={s.tags}>
-        {tags.map((t) => (
+        {[...tags, ...extra].map((t) => (
           <span key={t} className={s.tag}>
             #{t}
           </span>
         ))}
-        <button type="button" className={s.addTag}>
-          +
-        </button>
+        {adding ? (
+          <input
+            className={s.tagInput}
+            autoFocus
+            value={draft}
+            placeholder="标签名"
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={commitTag}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') commitTag()
+              if (e.key === 'Escape') {
+                setDraft('')
+                setAdding(false)
+              }
+            }}
+          />
+        ) : (
+          <button
+            type="button"
+            className={s.addTag}
+            aria-label="加标签"
+            onClick={() => setAdding(true)}
+          >
+            +
+          </button>
+        )}
       </div>
 
       <button type="button" className={s.board} onClick={onBoardOpened}>
