@@ -3,6 +3,7 @@ import { AppShell } from '@/parts/C01-AppShell'
 import { AppRail } from '@/parts/C02-AppRail'
 import { PathBar } from '@/parts/C40-PathBar'
 import { ProgressRing } from '@/parts/C47-ProgressRing'
+import { WeeklyReview } from '@/parts/C48-WeeklyReview'
 import { MasteryBadge } from '@/parts/C41-MasteryBadge'
 import { Button } from '@/parts/C60-Button'
 import { CardNode } from '@/parts/C11-CardNode'
@@ -102,6 +103,24 @@ export function S01Today({
                     </div>
                   ))}
                 </div>
+              </section>
+
+              <section className={s.block}>
+                <h2 className={s.h2}>每周回顾</h2>
+                <WeeklyReview
+                  days={[
+                    { d: '一', n: 8 },
+                    { d: '二', n: 12 },
+                    { d: '三', n: 0 },
+                    { d: '四', n: 6, today: true },
+                    { d: '五', n: 0, future: true },
+                    { d: '六', n: 0, future: true },
+                    { d: '日', n: 0, future: true },
+                  ]}
+                  lastWeek={34}
+                  lastAssessment={4}
+                  note="周三断档后，周四的第一张卡判定偏慢（平均 6.2 秒）。"
+                />
               </section>
 
               <section className={s.block}>
