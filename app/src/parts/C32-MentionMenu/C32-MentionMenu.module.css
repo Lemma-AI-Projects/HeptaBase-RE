@@ -1,0 +1,31 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.groupName {
+  padding: 4px var(--sp-2) 2px;
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.item {
+  text-align: left;
+  padding: 6px var(--sp-2);
+  border-radius: 6px;
+  font-size: var(--fs-13);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item:hover {
+  background: var(--c-sunken);
+}

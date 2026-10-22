@@ -1,0 +1,188 @@
+.doc {
+  display: flex;
+  flex-direction: column;
+  color: var(--c-text);
+}
+
+.h2 {
+  font-size: var(--fs-18);
+  line-height: var(--lh-18);
+  font-weight: 600;
+  margin: var(--sp-5) 0 var(--sp-2);
+}
+
+.h2:first-child {
+  margin-top: 0;
+}
+
+.p {
+  font-size: var(--fs-13);
+  line-height: var(--lh-13);
+  margin: 0 0 var(--sp-3);
+  white-space: pre-wrap;
+}
+
+.quote {
+  margin: var(--sp-3) 0;
+  padding: 2px 0 2px var(--sp-3);
+  border-left: 2px solid var(--c-line-strong);
+  font-size: var(--fs-13);
+  line-height: var(--lh-13);
+  color: var(--c-text-2);
+}
+
+.list,
+.todo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-13);
+  line-height: var(--lh-13);
+}
+
+.list li {
+  position: relative;
+  padding-left: var(--sp-4);
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  width: 3px;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: var(--c-text-3);
+}
+
+.todo li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+
+.todo li[data-checked='true'] .liText {
+  color: var(--c-text-3);
+  text-decoration: line-through;
+}
+
+.check {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 3px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--c-line-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check:hover {
+  background: var(--c-sunken);
+}
+
+.tick {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--c-accent);
+}
+
+.liText {
+  flex: 1;
+  min-width: 0;
+}
+
+.code {
+  margin: 0 0 var(--sp-3);
+  padding: var(--sp-3);
+  border-radius: var(--r-1);
+  background: var(--c-sunken);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.code .edit {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-12);
+  line-height: var(--lh-12);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 6px var(--sp-2);
+  border-bottom: 0.5px solid var(--c-line);
+}
+
+.table th {
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+.figure {
+  margin: 0 0 var(--sp-3);
+}
+
+.imageFrame {
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 0 1px var(--c-line);
+  overflow: hidden;
+  background: var(--c-panel);
+}
+
+.imageFrame svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figure figcaption {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.hr {
+  border: 0;
+  height: 0;
+  border-top: 0.5px solid var(--c-line);
+  margin: var(--sp-4) 0;
+}
+
+/* 编辑态：光标之外一切与读态一致 */
+.edit {
+  outline: none;
+  min-height: 1.6em;
+  white-space: pre-wrap;
+}
+
+.edit:empty::before {
+  content: attr(data-placeholder);
+  color: var(--c-text-3);
+}
+
+.doc mark {
+  background: var(--c-highlight);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+.doc[data-editable='true'] .edit:focus {
+  box-shadow: inset 0 -1px 0 var(--c-accent-line);
+}

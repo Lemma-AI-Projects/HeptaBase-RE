@@ -1,0 +1,67 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+}
+
+.summary {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.groupName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--sp-1) 4px;
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  border-radius: var(--r-1);
+  text-align: left;
+  color: var(--c-text-2);
+}
+
+.item:hover {
+  background: var(--c-sunken);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--fs-12);
+  color: var(--c-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.snippet {
+  font-size: var(--fs-11);
+  color: var(--c-text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
