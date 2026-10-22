@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
 const PORT = 9334
-const [, , url, expression] = process.argv
+const [, , url, expression, mode] = process.argv
 const profile = resolve('.chrome-shot/probe')
 const chrome = spawn(CHROME, ['--headless=new','--disable-gpu','--no-sandbox','--disable-breakpad','--hide-scrollbars','--no-first-run',`--remote-debugging-port=${PORT}`,`--user-data-dir=${profile}`,'--window-size=1440,900','about:blank'], { stdio: 'ignore' })
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -42,6 +42,11 @@ await send('Runtime.enable', {}, sessionId)
 await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false }, sessionId)
 await send('Page.navigate', { url }, sessionId)
 await sleep(1500)
+if (mode === 'reload') {
+  // 同一次进程内刷新，用来验证 localStorage 恢复（跨进程时 Chrome 被 kill 可能来不及落盘）
+  await send('Page.reload', { ignoreCache: false }, sessionId)
+  await sleep(1600)
+}
 const out = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true }, sessionId)
 console.log(JSON.stringify(out.result?.value ?? out.result, null, 2))
 ws.close()
