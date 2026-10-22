@@ -39,12 +39,6 @@ export function S11Inbox({
           apps={APPS}
           activeId="inbox"
           tags={NAV_TAGS}
-          onAppSelected={(id) => {
-            if (id === 'today') navigate('/s01')
-            if (id === 'board') navigate('/s02')
-            if (id === 'library') navigate('/s08')
-            if (id === 'tags') navigate('/s09')
-          }}
         />
       }
       main={

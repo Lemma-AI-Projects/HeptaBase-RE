@@ -25,6 +25,7 @@ export function AppTabs({
       activeId={active}
       tabs={TABS}
       onTabSelected={(id) => navigate(id)}
+      onTabAdded={() => navigate('/s04')}
       actions={
         <>
           {extra}

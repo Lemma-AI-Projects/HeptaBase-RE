@@ -88,7 +88,6 @@ export function S05Pdf({
           apps={APPS}
           activeId="highlight"
           tags={TAGS}
-          onAppSelected={(id) => (id === 'board' ? navigate('/s02') : undefined)}
         />
       }
       main={

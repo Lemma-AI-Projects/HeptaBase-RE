@@ -151,7 +151,6 @@ export function S03Card({
           apps={APPS}
           activeId="library"
           tags={TAGS}
-          onAppSelected={(id) => (id === 'board' ? navigate('/s02') : undefined)}
         />
       }
       main={

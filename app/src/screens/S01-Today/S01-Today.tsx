@@ -47,11 +47,6 @@ export function S01Today({
           apps={APPS}
           activeId="today"
           tags={TAGS}
-          onAppSelected={(id) => {
-            if (id === 'board') navigate('/s02')
-            if (id === 'library') navigate('/s03')
-            if (id === 'highlight') navigate('/s05')
-          }}
         />
       }
       main={

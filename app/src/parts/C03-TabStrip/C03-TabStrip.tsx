@@ -9,12 +9,14 @@ export function TabStrip({
   activeId,
   onTabSelected,
   onTabClosed,
+  onTabAdded,
   actions,
 }: {
   tabs: TabData[]
   activeId?: string
   onTabSelected?: (id: string) => void
   onTabClosed?: (id: string) => void
+  onTabAdded?: () => void
   actions?: ReactNode
 }): JSX.Element {
   return (
@@ -31,7 +33,13 @@ export function TabStrip({
             onClose={() => onTabClosed?.(t.id)}
           />
         ))}
-        <button type="button" className={s.add} aria-label="新建标签">
+        <button
+          type="button"
+          className={s.add}
+          aria-label="新建标签页"
+          title="新建卡片"
+          onClick={() => onTabAdded?.()}
+        >
           +
         </button>
       </div>

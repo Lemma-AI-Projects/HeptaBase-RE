@@ -28,12 +28,6 @@ export function S09Tags({
           apps={APPS}
           activeId="tags"
           tags={NAV_TAGS}
-          onAppSelected={(id) => {
-            if (id === 'board') navigate('/s02')
-            if (id === 'library') navigate('/s08')
-            if (id === 'today') navigate('/s01')
-            if (id === 'inbox') navigate('/s11')
-          }}
         />
       }
       main={

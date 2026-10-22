@@ -39,7 +39,11 @@ export function S08Library({
   const cards = getCards()
   const selected = getSelected()
   const [view, setView] = useState<ViewMode>('grid')
-  const [filters, setFilters] = useState<Record<string, string[]>>({ 状态: [], 标签: [] })
+  const [filters, setFilters] = useState<Record<string, string[]>>(() => {
+    const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+    const tag = q.get('tag')
+    return { 状态: [], 标签: tag ? [tag] : [] }
+  })
   const [limit, setLimit] = useState(120)
   const [toast, setToast] = useState<string | null>(null)
 
@@ -102,12 +106,6 @@ export function S08Library({
           apps={APPS}
           activeId="library"
           tags={NAV_TAGS}
-          onAppSelected={(id) => {
-            if (id === 'board') navigate('/s02')
-            if (id === 'today') navigate('/s01')
-            if (id === 'tags') navigate('/s09')
-            if (id === 'inbox') navigate('/s11')
-          }}
         />
       }
       main={
@@ -183,7 +181,7 @@ export function S08Library({
             <div className={s.stat}><span>已选</span><span>{selected.length}</span></div>
             <Divider />
             <p className={s.note}>
-              1000 张卡是造出来的压力数据（40 块板 / 20 个标签）。筛选与批量操作都在这份数据上跑。
+              1000 张卡是造出来的压力数据（40 块板 / 61 个标签）。筛选与批量操作都在这份数据上跑。
             </p>
           </div>
         </div>

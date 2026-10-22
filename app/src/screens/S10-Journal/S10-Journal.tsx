@@ -43,11 +43,6 @@ export function S10Journal({
           apps={APPS}
           activeId="today"
           tags={NAV_TAGS}
-          onAppSelected={(id) => {
-            if (id === 'today') navigate('/s01')
-            if (id === 'board') navigate('/s02')
-            if (id === 'library') navigate('/s08')
-          }}
         />
       }
       main={
